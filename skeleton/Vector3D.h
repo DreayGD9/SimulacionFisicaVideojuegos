@@ -6,37 +6,41 @@ using namespace std;
 class Vector3D
 {
 public:
-	Vector3D(float x = 0, float y = 0, float z = 0) : x(x), y(y), z(z) {};
+	Vector3D(float x = 0, float y = 0, float z = 0) : xV(x), yV(y), zV(z) {};
 
-	Vector3D normalize() {
-		return Vector3D(1,1,1);
+	Vector3D normalizVe() {
+		return Vector3D(xV/magnitude(), yV/magnitude(), zV/magnitude());
 	}
 	float magnitude() {
-		return std::sqrt(x*x + y*y + z*z);
+		return std::sqrt(xV*xV + yV*yV + zV*zV);
 	}
 
 	Vector3D& operator=(const Vector3D& otro) {
 		if (this != &otro) {
-			x = otro.x;
-			y = otro.y;
-			z = otro.z;
+			xV = otro.xV;
+			yV = otro.yV;
+			zV = otro.zV;
 		}
 		return *this;
 	}
 	Vector3D operator+(const Vector3D& otro) { // suma
-		return Vector3D(this->x + otro.x, this->y + otro.y, this->z + otro.z);
+		return Vector3D(this->xV + otro.xV, this->yV + otro.yV, this->zV + otro.zV);
 	}
 	Vector3D operator-(const Vector3D& otro) { // resta
-		return Vector3D(this->x - otro.x, this->y - otro.y, this->z - otro.z);
+		return Vector3D(this->xV - otro.xV, this->yV - otro.yV, this->zV - otro.zV);
 	}
 	Vector3D operator*(const float scalar) { // producto por escalar
-		return Vector3D(this->x * scalar, this->y * scalar, this->z * scalar);
+		return Vector3D(this->xV * scalar, this->yV * scalar, this->zV * scalar);
 	}
 	float operator*(const Vector3D& otro) { // producto escalar de dos vectores
-		return (this->x * otro.x) + (this->y * otro.y) + (this->z * otro.z);
+		return (this->xV * otro.xV) + (this->yV * otro.yV) + (this->zV * otro.zV);
 	}
 
+	float x() { return xV; };
+	float y() { return yV; };
+	float z() { return zV; };
+
 private:
-	float x, y, z;
+	float xV, yV, zV;
 };
 
