@@ -6,9 +6,11 @@ using namespace std;
 class Vector3D
 {
 public:
-	Vector3D(float x, float y, float z);
+	Vector3D(float x = 0, float y = 0, float z = 0) : x(x), y(y), z(z) {};
 
-	Vector3D normalize();
+	Vector3D normalize() {
+		return Vector3D(1,1,1);
+	}
 	float magnitude() {
 		return std::sqrt(x*x + y*y + z*z);
 	}
