@@ -21,7 +21,7 @@ public:
 private:
 	Vector3D vel;
 	Vector3D accel;
-	list<Vector3D> forces;
+	//list<Vector3D> forces;
 	float damping = 0.01;
 	physx::PxTransform tr;
 	RenderItem* renderItem;
