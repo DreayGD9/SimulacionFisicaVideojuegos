@@ -2,6 +2,7 @@
 
 #include <PxPhysicsAPI.h>
 #include "Vector3D.h"
+#include "RenderUtils.hpp"
 
 class Particle
 {
