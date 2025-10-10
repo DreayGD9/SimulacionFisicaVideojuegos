@@ -33,7 +33,7 @@
 
 #Any directory
 .common/**
-.bin/**
+#.bin/**
 .vs/**
 .vs/game/FileContentIndex**
 skeleton/debug/**
