@@ -15,7 +15,7 @@ public:
 		return std::sqrt(xV*xV + yV*yV + zV*zV);
 	}
 
-	Vector3D& operator=(const Vector3D& otro) {
+	Vector3D& operator=(const Vector3D& otro) { // constructor por copia
 		if (this != &otro) {
 			xV = otro.xV;
 			yV = otro.yV;
@@ -23,15 +23,37 @@ public:
 		}
 		return *this;
 	}
+
 	Vector3D operator+(const Vector3D& otro) { // suma
 		return Vector3D(this->xV + otro.xV, this->yV + otro.yV, this->zV + otro.zV);
 	}
+	Vector3D operator+=(const Vector3D& otro) { // suma
+		this->xV += otro.xV;
+		this->yV += otro.yV;
+		this->zV += otro.zV;
+		return *this;
+	}
+
 	Vector3D operator-(const Vector3D& otro) { // resta
 		return Vector3D(this->xV - otro.xV, this->yV - otro.yV, this->zV - otro.zV);
 	}
+	Vector3D operator-=(const Vector3D& otro) { // resta
+		this->xV -= otro.xV;
+		this->yV -= otro.yV;
+		this->zV -= otro.zV;
+		return *this;
+	}
+
 	Vector3D operator*(const float scalar) { // producto por escalar
 		return Vector3D(this->xV * scalar, this->yV * scalar, this->zV * scalar);
 	}
+	Vector3D operator*=(const float scalar) { // producto por escalar
+		this->xV *= scalar;
+		this->yV *= scalar;
+		this->zV *= scalar;
+		return *this;
+	}
+
 	float operator*(const Vector3D& otro) { // producto escalar de dos vectores
 		return (this->xV * otro.xV) + (this->yV * otro.yV) + (this->zV * otro.zV);
 	}

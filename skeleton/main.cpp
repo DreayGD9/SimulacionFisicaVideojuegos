@@ -33,6 +33,7 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
+vector<Particle*> particles;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -74,8 +75,14 @@ void initPhysics(bool interactive)
 	RenderItem* sphereY = new RenderItem(sphereShape, sphereTransformY, { 0,1,0,1 });
 	RenderItem* sphereZ = new RenderItem(sphereShape, sphereTransformZ, { 0,0,1,1 });
 
+	Vector3D partP = Vector3D(20.0f, 0, 0);
+	Vector3D partV = Vector3D(0, 1, 0);
+	Vector3D partA = Vector3D(0,0,0);
+	Particle* part = new Particle(partP, partV, partA);
+	particles.push_back(part);
+
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+}
 
 
 // Function to configure what happens in each step of physics
@@ -87,6 +94,10 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	for (auto p : particles) {
+		p->integrate(t);
+	}
 }
 
 // Function to clean data
