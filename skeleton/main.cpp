@@ -76,9 +76,9 @@ void initPhysics(bool interactive)
 	RenderItem* sphereZ = new RenderItem(sphereShape, sphereTransformZ, { 0,0,1,1 });
 
 	Vector3D partP = Vector3D(-20, 0, 0);
-	Vector3D partV = Vector3D(20, 10, 0);
-	Vector3D partA = Vector3D(0, 0, 0);
-	Particle* part = new Particle(partP, partV, partA);
+	Vector3D partV = Vector3D(20, 100, 0);
+	float partM = 10;
+	Particle* part = new Particle(partP, partV, partM);
 	particles.push_back(part);
 
 	gScene = gPhysics->createScene(sceneDesc);
