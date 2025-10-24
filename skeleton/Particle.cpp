@@ -22,11 +22,14 @@ void Particle::remGenerator(ForceGenerator* g) {
 	forceGens.remove(g);
 }
 
-void Particle::updateForces() {
-	accel = { 0,0,0 };
+Vector3D Particle::generateAccel() {
+	Vector3D a = { 0,0,0 };
+	if (DEBUG) cout << "FGs affecting this particle: " << endl;
 	for (auto fg : forceGens) {
-		accel += fg->getForce() * mass;
+		if (DEBUG) cout << "\t" << fg->getName() << " " << fg->getForce() << endl;
+		a += fg->getForce() * mass;
 	}
+	return a;
 }
 
 void Particle::integrate(double t) {
@@ -35,10 +38,7 @@ void Particle::integrate(double t) {
 	if (t <= 0.0f) return;
 
 	// Calcular aceleración en base a las fuerzas por la masa
-	accel = { 0,0,0 };
-	
-	// Aplicar fuerzas en base a generadores para crear la aceleración
-	updateForces();
+	accel = generateAccel();
 
 	// Actualizar velocidad con aceleración
 	vel += accel * t;

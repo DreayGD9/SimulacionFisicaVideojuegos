@@ -20,7 +20,7 @@ public:
 	void debug(bool e) { DEBUG = e; };
 
 	void integrate(double t);
-	void updateForces();
+	Vector3D generateAccel();
 
 private:
 	Vector3D vel;

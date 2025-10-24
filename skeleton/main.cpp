@@ -68,21 +68,6 @@ void initPhysics(bool interactive)
 
 	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
 
-	Vector3D tC = Vector3D(0, 0, 0);
-	Vector3D tX = Vector3D(10, 0, 0);
-	Vector3D tY = Vector3D(0, 10, 0);
-	Vector3D tZ = Vector3D(0, 0, 10);
-
-	PxTransform* sphereTransformC = new PxTransform({ tC.x(), tC.y(), tC.z() });
-	PxTransform* sphereTransformX = new PxTransform({ tX.x(), tX.y(), tX.z() });
-	PxTransform* sphereTransformY = new PxTransform({ tY.x(), tY.y(), tY.z() });
-	PxTransform* sphereTransformZ = new PxTransform({ tZ.x(), tZ.y(), tZ.z() });
-
-	RenderItem* sphereC = new RenderItem(sphereShape, sphereTransformC, { 1,1,1,1 });
-	RenderItem* sphereX = new RenderItem(sphereShape, sphereTransformX, { 1,0,0,1 });
-	RenderItem* sphereY = new RenderItem(sphereShape, sphereTransformY, { 0,1,0,1 });
-	RenderItem* sphereZ = new RenderItem(sphereShape, sphereTransformZ, { 0,0,1,1 });
-
 	Vector3D partP = Vector3D(-20, 0, 0);
 	Vector3D partV = Vector3D(0, 100, 0);
 	float partM = 10;
