@@ -30,6 +30,9 @@ Vector3D Particle::generateAccel() {
 		a += fg->getForce() * mass;
 	}
 	return a;
+
+	// NOTA: mover vector de generadores al sistema de partículas.
+	// Cada partícula debe tener un puntero al sistema que las crea.
 }
 
 void Particle::integrate(double t) {
