@@ -11,6 +11,8 @@
 #include "Vector3D.h"
 #include "Particle.h"
 
+#include "FG_Gravity.h"
+
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -58,6 +60,12 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 
+	// Force generators
+
+	FG_Gravity* FG_gravity = new FG_Gravity();
+
+	// Particle
+
 	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
 
 	Vector3D tC = Vector3D(0, 0, 0);
@@ -76,9 +84,11 @@ void initPhysics(bool interactive)
 	RenderItem* sphereZ = new RenderItem(sphereShape, sphereTransformZ, { 0,0,1,1 });
 
 	Vector3D partP = Vector3D(-20, 0, 0);
-	Vector3D partV = Vector3D(20, 100, 0);
+	Vector3D partV = Vector3D(0, 100, 0);
 	float partM = 10;
 	Particle* part = new Particle(partP, partV, partM);
+	part->addGenerator(FG_gravity);
+	part->debug(true);
 	particles.push_back(part);
 
 	gScene = gPhysics->createScene(sceneDesc);

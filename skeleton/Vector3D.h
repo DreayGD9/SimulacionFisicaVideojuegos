@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <ostream>
 using namespace std;
 
 class Vector3D
@@ -56,6 +57,11 @@ public:
 
 	float operator*(const Vector3D& otro) { // producto escalar de dos vectores
 		return (this->xV * otro.xV) + (this->yV * otro.yV) + (this->zV * otro.zV);
+	}
+
+	friend std::ostream& operator<<(std::ostream& os, const Vector3D& v) {
+		os << "(" << v.xV << ", " << v.yV << ", " << v.zV << ")";
+		return os;
 	}
 
 	float x() { return xV; };

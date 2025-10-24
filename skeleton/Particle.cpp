@@ -8,15 +8,25 @@ Particle::Particle(Vector3D p, Vector3D v, float m) : vel(v), mass(m) {
 	PxShape* shape = CreateShape(PxSphereGeometry(1.0f));
 	tr = PxTransform({ p.x(), p.y(), p.z() });
 	renderItem = new RenderItem(shape, &tr, { 1,1,1,1 });
-	forces.push_back(gravity);
 }
 
 Particle::~Particle() {
 	renderItem->release();
 }
 
-void Particle::addForce(Force f) {
-	forces.push_back(f);
+void Particle::addGenerator(ForceGenerator* g) {
+	forceGens.push_back(g);
+}
+
+void Particle::remGenerator(ForceGenerator* g) {
+	forceGens.remove(g);
+}
+
+void Particle::updateForces() {
+	accel = { 0,0,0 };
+	for (auto fg : forceGens) {
+		accel += fg->getForce() * mass;
+	}
 }
 
 void Particle::integrate(double t) {
@@ -26,9 +36,9 @@ void Particle::integrate(double t) {
 
 	// Calcular aceleración en base a las fuerzas por la masa
 	accel = { 0,0,0 };
-	for (auto f : forces) {
-		accel += (f.getForce() * mass);
-	}
+	
+	// Aplicar fuerzas en base a generadores para crear la aceleración
+	updateForces();
 
 	// Actualizar velocidad con aceleración
 	vel += accel * t;
@@ -36,8 +46,10 @@ void Particle::integrate(double t) {
 	// Damping
 	//vel *= powf(damping, t);
 
-	cout << vel.x() << " " << vel.y() << " " << vel.z() << endl;
-	cout << tr.p.x << " " << tr.p.y << " " << tr.p.z << endl << endl;
+	if (DEBUG) 
+		cout << "V: " << vel << " | "
+		<< "A: " << accel << " | "
+		<< "T: (" << tr.p.x << ", " << tr.p.y << ", " << tr.p.z << ")" << endl << endl;
 
 	// Actualizar posición con velocidad
 	tr.p.x += vel.x() * t;
