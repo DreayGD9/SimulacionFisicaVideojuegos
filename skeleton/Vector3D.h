@@ -68,7 +68,6 @@ public:
 	float y() { return yV; };
 	float z() { return zV; };
 
-private:
 	float xV, yV, zV;
 };
 

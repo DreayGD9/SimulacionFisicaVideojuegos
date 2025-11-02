@@ -10,6 +10,7 @@
 
 #include "Vector3D.h"
 #include "Particle.h"
+#include "ParticleSystem.h"
 
 #include "FG_Gravity.h"
 
@@ -35,7 +36,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-vector<Particle*> particles;
+//vector<Particle*> particles;
+vector<ParticleSystem*> partSystems;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -64,17 +66,22 @@ void initPhysics(bool interactive)
 
 	FG_Gravity* FG_gravity = new FG_Gravity();
 
-	// Particle
+	// Particlesystem
 
-	PxShape* sphereShape = CreateShape(PxSphereGeometry(1.0f));
+	ParticleSystem* partSys = new ParticleSystem(
+		100,
+		{ 0,0,0 },
+		{ 0,20,20 },
+		{ 0,0,0 },
+		{ 2,2,2 },
+		0.01,
+		2,
+		1
+	);
+	partSys->addGen(FG_gravity);
+	partSystems.push_back(partSys);
 
-	Vector3D partP = Vector3D(-20, 0, 0);
-	Vector3D partV = Vector3D(0, 100, 0);
-	float partM = 10;
-	Particle* part = new Particle(partP, partV, partM);
-	part->addGenerator(FG_gravity);
-	part->debug(true);
-	particles.push_back(part);
+	partSys->enable(true);
 
 	gScene = gPhysics->createScene(sceneDesc);
 }
@@ -90,8 +97,8 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	for (auto p : particles) {
-		p->integrate(t);
+	for (auto s : partSystems) {
+		s->update(t);
 	}
 }
 

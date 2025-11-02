@@ -6,29 +6,35 @@
 #include "RenderUtils.hpp"
 #include <list>
 
+using namespace physx;
 using namespace std;
+
+class ParticleSystem;
 
 class Particle
 {
 public:
-	Particle(Vector3D p, Vector3D v, float m);
+	Particle(PxShape* s, Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps);
 	~Particle();
 
-	void addGenerator(ForceGenerator* g);
-	void remGenerator(ForceGenerator* g);
+	void addForce(Vector3D f);
 
 	void debug(bool e) { DEBUG = e; };
 
+	bool canExpire() { return timeAlive >= lifetime; };
+
 	void integrate(double t);
-	Vector3D generateAccel();
 
 private:
 	Vector3D vel;
 	Vector3D accel;
 	float mass;
+	float lifetime;
+	ParticleSystem* partsys;
 
-	list<ForceGenerator*> forceGens;
+	float timeAlive;
 
+	vector<Vector3D> forces;
 	float damping = 0.01;
 
 	bool DEBUG = false;
