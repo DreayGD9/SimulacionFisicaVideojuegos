@@ -11,8 +11,7 @@ ParticleSystem::ParticleSystem(int n,
 	Vector3D dR,
 	float spD,
 	float sT,
-	float rT,
-	float yI) {
+	float rT) {
 
 	enabled = false;
 
@@ -26,23 +25,16 @@ ParticleSystem::ParticleSystem(int n,
 	spDelay = spD;
 	sTime = sT;
 	rTime = rT;
-	yInclination = yI;
 
 	dist = std::normal_distribution<float>(0, 1);
 }
 
 Vector3D ParticleSystem::genRandVec(Vector3D ini, Vector3D range) {
-
 	Vector3D sol;
-
 	sol.xV = dist(gen) * range.xV + ini.xV;
-	if (yInclination != 0) { sol.yV = sol.xV * yInclination + ini.yV; }
-	else {
-		sol.yV = dist(gen) * range.yV + ini.yV;
-	}
+	sol.yV = dist(gen) * range.yV + ini.yV;
 	sol.zV = dist(gen) * range.zV + ini.zV;
 	return sol;
-	
 }
 
 void ParticleSystem::createParticle() {
@@ -53,8 +45,6 @@ void ParticleSystem::createParticle() {
 	float pL = sTime + dist(gen) * rTime;
 	particles.push_back(make_unique<Particle>(pS, pP, pV, pM, pL, this));
 	nParticles++;
-
-	//cout << pS << " " << pP << " " << pV << " " << pM << " " << pL << endl << endl;
 }
 
 void ParticleSystem::emit(int n) {

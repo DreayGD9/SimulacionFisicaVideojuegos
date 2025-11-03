@@ -13,7 +13,6 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="Axis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />

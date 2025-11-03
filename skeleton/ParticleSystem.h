@@ -16,8 +16,7 @@ public:
 		Vector3D dR,
 		float spD,
 		float sT, 
-		float rT, 
-		float yI = 0.f);
+		float rT);
 	~ParticleSystem() {};
 
 	void enable(bool e) { enabled = e; };

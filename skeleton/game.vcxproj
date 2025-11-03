@@ -253,7 +253,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Axis.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />

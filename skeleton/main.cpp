@@ -66,8 +66,8 @@ void initPhysics(bool interactive)
 
 	// Force generators
 
-	FG_Constant* FG_gravity = new FG_Constant(Vector3D(0, -9.8, 0));
-
+	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false);
+	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, true, { 40,0,0 }, 20);
 
 	// Axis
 
@@ -78,14 +78,15 @@ void initPhysics(bool interactive)
 	ParticleSystem* partSys = new ParticleSystem(
 		100,
 		{ 0,0,0 },
-		{ 0,20,20 },
+		{ 20,10,-5 },
 		{ 0,0,0 },
-		{ 2,2,2 },
+		{ 0.5,0.5,0.5 },
 		0.01,
 		2,
 		1
 	);
 	partSys->addGen(FG_gravity);
+	partSys->addGen(FG_wind1);
 	partSystems.push_back(partSys);
 
 	partSys->enable(true);

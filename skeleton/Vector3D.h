@@ -9,7 +9,7 @@ class Vector3D
 public:
 	Vector3D(float x = 0, float y = 0, float z = 0) : xV(x), yV(y), zV(z) {};
 
-	Vector3D normalizVe() {
+	Vector3D normalize() {
 		return Vector3D(xV/magnitude(), yV/magnitude(), zV/magnitude());
 	}
 	float magnitude() {
@@ -53,6 +53,10 @@ public:
 		this->yV *= scalar;
 		this->zV *= scalar;
 		return *this;
+	}
+
+	Vector3D operator/(const float scalar) { // división por escalar
+		return Vector3D(this->xV / scalar, this->yV / scalar, this->zV / scalar);
 	}
 
 	float operator*(const Vector3D& otro) { // producto escalar de dos vectores
