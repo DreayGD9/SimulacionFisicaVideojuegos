@@ -9,10 +9,12 @@
 #include "callbacks.hpp"
 
 #include "Vector3D.h"
+#include "Axis.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
 
-#include "FG_Gravity.h"
+#include "FG_Constant.h"
+#include "FG_Wind.h"
 
 #include <iostream>
 
@@ -64,7 +66,12 @@ void initPhysics(bool interactive)
 
 	// Force generators
 
-	FG_Gravity* FG_gravity = new FG_Gravity();
+	FG_Constant* FG_gravity = new FG_Constant(Vector3D(0, -9.8, 0));
+
+
+	// Axis
+
+	Axis axis = Axis(1, 10, 0.5);
 
 	// Particlesystem
 

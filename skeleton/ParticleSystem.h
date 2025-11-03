@@ -30,7 +30,7 @@ public:
 	Vector3D getPos() { return sPos; }
 	void addGen(ForceGenerator* force);
 
-	Vector3D getAccel(float m);
+	Vector3D getAccel(float m, Vector3D pos, Vector3D v);
 
 protected:
 	vector<unique_ptr<Particle>> particles;

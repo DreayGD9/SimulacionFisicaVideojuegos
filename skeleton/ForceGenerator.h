@@ -5,11 +5,6 @@
 class ForceGenerator
 {
 public:
-	string getName() { return name; };
-	virtual Vector3D getForce() { return force; };
-
-protected:
-	string name;
-	Vector3D force;
+	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) { return Vector3D(0,0,0); };
 };
 

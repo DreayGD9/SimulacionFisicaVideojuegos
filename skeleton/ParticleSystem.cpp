@@ -97,13 +97,10 @@ void ParticleSystem::addGen(ForceGenerator* fg) {
 	forces.push_back(fg);
 }
 
-Vector3D ParticleSystem::getAccel(float m) {
+Vector3D ParticleSystem::getAccel(float m, Vector3D p, Vector3D v) {
 	Vector3D a = { 0,0,0 };
 	for (auto f : forces) {
-		if (f->getName() == "GRAVITY") {
-			a += f->getForce();
-		}
-		else a += f->getForce() * m;
+		a += f->getForce(m, p, v);
 	}
 	return a;
 }

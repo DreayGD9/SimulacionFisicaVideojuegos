@@ -19,8 +19,6 @@ public:
 
 	void addForce(Vector3D f);
 
-	void debug(bool e) { DEBUG = e; };
-
 	bool canExpire() { return timeAlive >= lifetime; };
 
 	void integrate(double t);
@@ -36,8 +34,6 @@ private:
 
 	vector<Vector3D> forces;
 	float damping = 0.01;
-
-	bool DEBUG = false;
 
 	physx::PxTransform tr;
 	RenderItem* renderItem;

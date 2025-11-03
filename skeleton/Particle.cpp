@@ -26,18 +26,15 @@ void Particle::integrate(double t) {
 	if (t <= 0.0f) return;
 
 	// Calcular aceleración en base a las fuerzas por la masa
-	accel = partsys->getAccel(mass);
+	Vector3D p = { tr.p.x, tr.p.y, tr.p.z };
+	Vector3D v = vel;
+	accel = partsys->getAccel(mass, p, v);
 
 	// Actualizar velocidad con aceleración
 	vel += accel * t;
 
 	// Damping
 	//vel *= powf(damping, t);
-
-	if (DEBUG) 
-		cout << "V: " << vel << " | "
-		<< "A: " << accel << " | "
-		<< "T: (" << tr.p.x << ", " << tr.p.y << ", " << tr.p.z << ")" << endl << endl;
 
 	// Actualizar posición con velocidad
 	tr.p.x += vel.x() * t;
