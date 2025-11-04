@@ -79,7 +79,7 @@ void initPhysics(bool interactive)
 	
 	// Axis
 
-	Axis axis = Axis(1, 10, 0.5);
+	Axis axis = Axis(0.5, 10, true, 0.5);
 
 	// Particlesystem
 

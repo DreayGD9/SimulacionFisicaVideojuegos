@@ -9,7 +9,6 @@ using namespace std;
 using namespace physx;
 
 
-
 class ForceGenerator
 {
 public:
