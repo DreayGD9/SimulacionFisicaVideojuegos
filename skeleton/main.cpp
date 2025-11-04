@@ -15,6 +15,8 @@
 
 #include "FG_Constant.h"
 #include "FG_Wind.h"
+#include "FG_Whirlwind.h"
+#include "FG_Explosion.h"
 
 #include <iostream>
 
@@ -38,8 +40,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-//vector<Particle*> particles;
 vector<ParticleSystem*> partSystems;
+vector<ForceGenerator*> forceGens;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -67,29 +69,37 @@ void initPhysics(bool interactive)
 	// Force generators
 
 	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false);
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, true, { 40,0,0 }, 20);
-
+	forceGens.push_back(FG_gravity);
+	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, true, { 40,0,0 }, 20);
+	//forceGens.push_back(FG_wind1);
+	//FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, {0,0,0}, 20);
+	//forceGens.push_back(FG_gravity);
+	FG_Explosion* FG_explosion1 = new FG_Explosion("EXPLOSION1", 50000, 100, 3, { 0,0,0 }, 20, 0.15);
+	forceGens.push_back(FG_explosion1);
+	
 	// Axis
 
 	Axis axis = Axis(1, 10, 0.5);
 
 	// Particlesystem
 
-	ParticleSystem* partSys = new ParticleSystem(
-		100,
+	ParticleSystem* partSys1 = new ParticleSystem(
+		500,
+		{ -40,0,0 },
+		{ 20,10,0 },
 		{ 0,0,0 },
-		{ 20,10,-5 },
-		{ 0,0,0 },
-		{ 0.5,0.5,0.5 },
+		{ 1,1,1 },
 		0.01,
-		2,
+		5,
 		1
 	);
-	partSys->addGen(FG_gravity);
-	partSys->addGen(FG_wind1);
-	partSystems.push_back(partSys);
 
-	partSys->enable(true);
+	partSys1->addGen(FG_gravity);
+	partSys1->addGen(FG_explosion1);
+
+	partSystems.push_back(partSys1);
+
+	partSys1->enable(true);
 
 	gScene = gPhysics->createScene(sceneDesc);
 }
@@ -107,6 +117,10 @@ void stepPhysics(bool interactive, double t)
 
 	for (auto s : partSystems) {
 		s->update(t);
+	}
+
+	for (auto fg : forceGens) {
+		fg->update(t);
 	}
 }
 

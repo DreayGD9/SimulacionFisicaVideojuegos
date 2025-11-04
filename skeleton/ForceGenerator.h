@@ -8,6 +8,8 @@
 using namespace std;
 using namespace physx;
 
+
+
 class ForceGenerator
 {
 public:
@@ -21,6 +23,7 @@ public:
 
 	string getName() { return name; };
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) { return Vector3D(0,0,0); };
+	virtual void update(double t) {};
 
 	bool isWithinArea(Vector3D pos) {
 		if (aA && aR > 0) {

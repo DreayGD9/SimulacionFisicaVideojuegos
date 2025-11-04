@@ -31,6 +31,8 @@
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Axis.h" />
     <ClInclude Include="FG_Wind.h" />
+    <ClInclude Include="FG_Whirlwind.h" />
+    <ClInclude Include="FG_Explosion.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

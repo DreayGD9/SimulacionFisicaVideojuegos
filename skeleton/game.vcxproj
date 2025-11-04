@@ -267,6 +267,8 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="FG_Constant.h" />
+    <ClInclude Include="FG_Explosion.h" />
+    <ClInclude Include="FG_Whirlwind.h" />
     <ClInclude Include="FG_Wind.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="Particle.h" />
