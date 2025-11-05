@@ -1,26 +1,27 @@
 #include "mainGame.h"
 
 mainGame::mainGame() {
-	// Force generators
-
-	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
-	//forceGens.push_back(FG_gravity);
-	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, true, { 40,0,0 }, 20);
-	//forceGens.push_back(FG_wind1);
-	//FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, {0,0,0}, 20);
-	//forceGens.push_back(FG_gravity);
-	FG_Explosion* FG_explosion1 = new FG_Explosion("EXPLOSION1", 50000, 100, 3, false, false, { 0, 0, 0 }, 20, 0.15);
-	forceGens.push_back(FG_explosion1);
 
 	// Axis
 
-	Axis axis = Axis(0.5, 10, true, 0.5);
+	if (GAME_DEBUG) Axis axis = Axis(0.5, 10, true, 0.5);
+
+	// Force generators
+
+	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
+	forceGens.push_back(FG_gravity);
+	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
+	//forceGens.push_back(FG_wind1);
+	//FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, false, {0,0,0}, 20);
+	//forceGens.push_back(FG_whirlwind1);
+	//FG_Explosion* FG_explosion1 = new FG_Explosion("EXPLOSION1", 50000, 100, 3, false, false, { 0, 0, 0 }, 30, 0.15);
+	//forceGens.push_back(FG_explosion1);
 
 	// Particlesystem
 
 	int nParticles = 500;
 	Vector3D pos = { -40,0,0 };
-	Vector3D dir = { 20,20,0 };
+	Vector3D dir = { 20,10,5 };
 	Vector3D posR = { 0,0,0 };
 	Vector3D dirR = { 2,2,2 };
 	float spawnDelay = 0.01;
@@ -31,7 +32,9 @@ mainGame::mainGame() {
 	ParticleSystem* partSys1 = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, partShape, colour);
 
 	partSys1->addGen(FG_gravity);
-	partSys1->addGen(FG_explosion1);
+	//partSys1->addGen(FG_wind1);
+	//partSys1->addGen(FG_whirlwind1);
+	//partSys1->addGen(FG_explosion1);
 
 	partSystems.push_back(partSys1);
 
@@ -57,6 +60,31 @@ void mainGame::fireParticles(int n) {
 void mainGame::toggleParticles() {
 	for (auto s : partSystems) {
 		s->toggleEnable();
+	}
+}
+
+
+void mainGame::toggleGravity() {
+	for (auto fg : forceGens) {
+		if (fg->getType() == FG_CONSTANT && fg->getName() == "GRAVITY") {
+			fg->toggleActive();
+		}
+	}
+}
+
+void mainGame::toggleWind() {
+	for (auto fg : forceGens) {
+		if (fg->getType() == FG_WIND) {
+			fg->toggleActive();
+		}
+	}
+}
+
+void mainGame::toggleWhirlwind() {
+	for (auto fg : forceGens) {
+		if (fg->getType() == FG_WHIRLWIND) {
+			fg->toggleActive();
+		}
 	}
 }
 

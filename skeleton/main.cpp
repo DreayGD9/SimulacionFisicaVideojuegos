@@ -113,6 +113,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->explodeAll();
 		break;
 	}
+	case 'R':
+	{
+		game->toggleGravity();
+		break;
+	}
+	case 'T':
+	{
+		game->toggleWind();
+		break;
+	}
+	case 'Y':
+	{
+		game->toggleWhirlwind();
+		break;
+	}
 	case 'F':
 	{
 		game->toggleParticles();

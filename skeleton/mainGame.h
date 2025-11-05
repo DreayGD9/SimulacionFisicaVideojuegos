@@ -20,6 +20,10 @@ public:
 
 	void fireParticles(int n);
 	void toggleParticles();
+
+	void toggleGravity();
+	void toggleWind();
+	void toggleWhirlwind();
 	void explodeAll();
 
 	static const bool GAME_DEBUG = true;
