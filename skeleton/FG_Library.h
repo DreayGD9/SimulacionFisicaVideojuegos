@@ -145,3 +145,64 @@ private:
 	float tSinceLastBoom;
 	float boomDelay;
 };
+
+// --------------------------
+// PLAYER SPEED
+// --------------------------
+
+class FG_PlrSpeed : public ForceGenerator
+{
+public:
+	FG_PlrSpeed(string n, float s, float ms) :
+		ForceGenerator(n, FG_PLRSPEED, true, false), str(s), currStr(0), maxStr(ms)  {
+		forceVector = { 0,0,0 };
+		holdingForward = false;
+		holdingBackward = false;
+	}
+
+	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		//cout << forceVector << endl;
+		return forceVector / m;
+	};
+
+	void update(double t) {
+		if (holdingForward) {
+			currStr += str * t;
+			if (currStr >= maxStr) currStr = maxStr;
+		}
+		else if (holdingBackward) {
+			currStr -= str * t;
+			if (currStr <= -maxStr) currStr = -maxStr;
+		}
+		else {
+			if (currStr > 0.1) currStr -= str * t;
+			else if (currStr < -0.1) currStr += str * t;
+			else currStr = 0;
+		}
+		forceVector = { currStr, 0, 0 };
+		//cout << holdingForward << " " << holdingBackward << " | " << currStr << endl;
+	}
+
+	void forward() {
+		holdingForward = true;
+		holdingBackward = false;
+	}
+
+	void backward() {
+		holdingForward = false;
+		holdingBackward = true;
+	}
+
+	void stop() {
+		holdingForward = false;
+		holdingBackward = false;
+	}
+
+private:
+	float str;
+	float currStr;
+	float maxStr;
+	Vector3D forceVector;
+	bool holdingForward;
+	bool holdingBackward;
+};

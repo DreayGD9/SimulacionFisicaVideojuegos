@@ -10,6 +10,8 @@
 #include "ParticleSystem.h"
 #include "FG_Library.h"
 
+#include "Player.h"
+
 class mainGame
 {
 public:
@@ -17,6 +19,13 @@ public:
 	~mainGame();
 
 	void update(float t);
+
+	void createPlayer();
+	void createLaunchers();
+
+	void plrForward();
+	void plrBackward();
+	void plrStop();
 
 	void fireParticles(int n);
 	void toggleParticles();
@@ -29,7 +38,13 @@ public:
 	static const bool GAME_DEBUG = true;
 
 private:
-	vector<ParticleSystem*> partSystems;
+
+	Player* plr;
+	FG_PlrSpeed* plrSpeed;
+
+	//ParticleSystem* launcher1;
+
+	vector<ParticleSystem*> launchers;
 	vector<ForceGenerator*> forceGens;
 };
 

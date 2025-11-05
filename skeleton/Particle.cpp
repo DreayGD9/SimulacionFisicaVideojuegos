@@ -5,7 +5,6 @@
 
 using namespace std;
 
-
 Particle::Particle(Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps, PxShape* s, Vector4 c) : vel(v), mass(m), lifetime(l), partsys(ps) {
 	tr = PxTransform({ p.x(), p.y(), p.z() });
 	renderItem = new RenderItem(s, &tr, c);
@@ -26,9 +25,8 @@ void Particle::integrate(double t) {
 	if (t <= 0.0f) return;
 
 	// Calcular aceleración en base a las fuerzas por la masa
-	Vector3D p = { tr.p.x, tr.p.y, tr.p.z };
-	Vector3D v = vel;
-	accel = partsys->getAccel(mass, p, v);
+	Vector3D pos = { tr.p.x, tr.p.y, tr.p.z };
+	accel = partsys->getAccel(mass, pos, vel);
 
 	// Actualizar velocidad con aceleración
 	vel += accel * t;

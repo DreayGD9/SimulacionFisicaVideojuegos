@@ -21,9 +21,9 @@ public:
 
 	bool canExpire() { return timeAlive >= lifetime; };
 
-	void integrate(double t);
+	virtual void integrate(double t);
 
-private:
+protected:
 	Vector3D vel;
 	Vector3D accel;
 	float mass;

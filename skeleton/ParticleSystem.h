@@ -27,8 +27,8 @@ public:
 
 	virtual void update(double t);
 
-	void updatePos(Vector3D newPos) { sPos = newPos; }
-	void updateDir(Vector3D newDir) { sDir = newDir; }
+	void updatePos(Vector3D newPos);
+	void updateDir(Vector3D newDir);
 	Vector3D getPos() { return sPos; }
 	void addGen(ForceGenerator* force);
 
@@ -58,6 +58,5 @@ private:
 	Vector3D genRandVec(Vector3D ini, Vector3D range);
 
 	list<ForceGenerator*> forces;
-
 };
 

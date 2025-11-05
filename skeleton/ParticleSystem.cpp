@@ -1,4 +1,5 @@
 #include "ParticleSystem.h"
+#include "mainGame.h"
 #include <iostream>
 
 using namespace std;
@@ -85,6 +86,13 @@ void ParticleSystem::update(double t) {
 	}
 
 	integrate(t);
+}
+
+void ParticleSystem::updatePos(Vector3D newPos) { 
+	sPos = newPos;
+}
+void ParticleSystem::updateDir(Vector3D newDir) {
+	sDir = newDir;
 }
 
 void ParticleSystem::addGen(ForceGenerator* fg) {

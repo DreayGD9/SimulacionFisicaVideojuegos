@@ -14,6 +14,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -32,6 +33,7 @@
     <ClInclude Include="Axis.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="FG_Library.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

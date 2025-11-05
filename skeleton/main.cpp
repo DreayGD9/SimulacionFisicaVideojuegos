@@ -108,6 +108,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
+	case 'L':
+	{
+		game->plrForward();
+		break;
+	}
+	case 'J':
+	{
+		game->plrBackward();
+		break;
+	}
+	case 'K':
+	{
+		game->plrStop();
+		break;
+	}
 	case 'E':
 	{
 		game->explodeAll();
@@ -136,6 +151,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	default:
 		break;
 	}
+	
+	PX_UNUSED(camera);
 }
 
 void onCollision(physx::PxActor* actor1, physx::PxActor* actor2)
