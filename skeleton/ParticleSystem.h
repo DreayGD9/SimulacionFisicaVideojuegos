@@ -16,7 +16,9 @@ public:
 		Vector3D dR,
 		float spD,
 		float sT, 
-		float rT);
+		float rT,
+		PxShape* s,
+		Vector4 c);
 	~ParticleSystem() {};
 
 	void enable(bool e) { enabled = e; };
@@ -41,6 +43,8 @@ private:
 
 	bool enabled;
 
+	PxShape* shape;
+	Vector4 colour;
 	Vector3D sPos, sDir, rPos, rDir;
 	float sTime, rTime;
 	float spDelay;

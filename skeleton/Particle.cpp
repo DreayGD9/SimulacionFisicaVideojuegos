@@ -6,9 +6,9 @@
 using namespace std;
 
 
-Particle::Particle(PxShape* s, Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps) : vel(v), mass(m), lifetime(l), partsys(ps) {
+Particle::Particle(Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps, PxShape* s, Vector4 c) : vel(v), mass(m), lifetime(l), partsys(ps) {
 	tr = PxTransform({ p.x(), p.y(), p.z() });
-	renderItem = new RenderItem(s, &tr, { 1,1,1,1 });
+	renderItem = new RenderItem(s, &tr, c);
 	timeAlive = 0;
 }
 

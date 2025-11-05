@@ -14,7 +14,7 @@ class ParticleSystem;
 class Particle
 {
 public:
-	Particle(PxShape* s, Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps);
+	Particle(Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps, PxShape* s = CreateShape(PxSphereGeometry(0.5f)), Vector4 c = {1,1,1,1});
 	~Particle();
 
 	void addForce(Vector3D f);

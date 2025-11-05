@@ -11,8 +11,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="ForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -33,6 +34,8 @@
     <ClInclude Include="FG_Wind.h" />
     <ClInclude Include="FG_Whirlwind.h" />
     <ClInclude Include="FG_Explosion.h" />
+    <ClInclude Include="mainGame.h" />
+    <ClInclude Include="FG_Library.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

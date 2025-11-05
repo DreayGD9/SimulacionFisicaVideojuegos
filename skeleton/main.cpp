@@ -8,15 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
-#include "Vector3D.h"
-#include "Axis.h"
-#include "Particle.h"
-#include "ParticleSystem.h"
-
-#include "FG_Constant.h"
-#include "FG_Wind.h"
-#include "FG_Whirlwind.h"
-#include "FG_Explosion.h"
+#include "mainGame.h"
 
 #include <iostream>
 
@@ -40,8 +32,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-vector<ParticleSystem*> partSystems;
-vector<ForceGenerator*> forceGens;
+mainGame* game;
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -66,40 +58,7 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 
-	// Force generators
-
-	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false);
-	forceGens.push_back(FG_gravity);
-	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, true, { 40,0,0 }, 20);
-	//forceGens.push_back(FG_wind1);
-	//FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, {0,0,0}, 20);
-	//forceGens.push_back(FG_gravity);
-	FG_Explosion* FG_explosion1 = new FG_Explosion("EXPLOSION1", 50000, 100, 3, { 0,0,0 }, 20, 0.15);
-	forceGens.push_back(FG_explosion1);
-	
-	// Axis
-
-	Axis axis = Axis(0.5, 10, true, 0.5);
-
-	// Particlesystem
-
-	ParticleSystem* partSys1 = new ParticleSystem(
-		500,
-		{ -40,0,0 },
-		{ 20,10,0 },
-		{ 0,0,0 },
-		{ 1,1,1 },
-		0.01,
-		5,
-		1
-	);
-
-	partSys1->addGen(FG_gravity);
-	partSys1->addGen(FG_explosion1);
-
-	partSystems.push_back(partSys1);
-
-	partSys1->enable(true);
+	game = new mainGame();
 
 	gScene = gPhysics->createScene(sceneDesc);
 }
@@ -115,13 +74,7 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	for (auto s : partSystems) {
-		s->update(t);
-	}
-
-	for (auto fg : forceGens) {
-		fg->update(t);
-	}
+	game->update(t);
 }
 
 // Function to clean data
