@@ -15,6 +15,7 @@
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -34,6 +35,7 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="FG_Library.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

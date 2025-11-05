@@ -11,6 +11,7 @@
 #include "FG_Library.h"
 
 #include "Player.h"
+#include "Enemy.h"
 
 class mainGame
 {
@@ -21,14 +22,13 @@ public:
 	void update(float t);
 
 	void createPlayer();
-	void createLaunchers();
+	void createEnemy();
 
 	void plrForward();
 	void plrBackward();
 	void plrStop();
 
-	void fireParticles(int n);
-	void toggleParticles();
+	void enemiesFire();
 
 	void toggleGravity();
 	void toggleWind();
@@ -42,9 +42,7 @@ private:
 	Player* plr;
 	FG_PlrSpeed* plrSpeed;
 
-	//ParticleSystem* launcher1;
-
-	vector<ParticleSystem*> launchers;
+	vector<Enemy*> enemies;
 	vector<ForceGenerator*> forceGens;
 };
 

@@ -15,9 +15,9 @@ mainGame::mainGame() {
 
 	createPlayer();
 
-	// Launchers
+	// Enemies
 
-	createLaunchers();
+	createEnemy();
 
 	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
 	//forceGens.push_back(FG_wind1);
@@ -52,8 +52,8 @@ mainGame::mainGame() {
 }
 
 void mainGame::update(float t) {
-	for (auto s : launchers) {
-		s->update(t);
+	for (auto e : enemies) {
+		e->update(t);
 	}
 
 	for (auto fg : forceGens) {
@@ -76,27 +76,20 @@ void mainGame::createPlayer() {
 	plr->addGen(plrSpeed);
 }
 
-void mainGame::createLaunchers() {
-	int nParticles = 100;
-	Vector3D pos = { 0,0,0 };
-	Vector3D dir = { 20,10,5 };
-	Vector3D posR = { 0,0,0 };
-	Vector3D dirR = { 2,2,2 };
-	float spawnDelay = 0.01;
-	float lifetime = 5;
-	float lifetimeR = 1;
-	PxShape* partShape = CreateShape(PxBoxGeometry(0.5, 0.5, 0.5));
-	Vector4 colour = { 1,1,1,1 };
-	ParticleSystem* launcher1 = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, partShape, colour);
-	launcher1->enable(true);
-	launchers.push_back(launcher1);
+void mainGame::createEnemy() {
+	
+	Vector3D pos = { 0,0,-20 };
+	float mass = 10;
+	float maxSpd = 25;
+	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	Vector4 colour = { 1,0,0,1 };
 
-	for (auto l : launchers) {
-		for (auto fg : forceGens) {
-			l->addGen(fg);
-		}
-	}
+	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, 3, plr);
+	enemies.push_back(enemy);
 
+	FG_PlrSpeed* enemySpd = new FG_PlrSpeed("ENM_SPEED", maxSpd * 100, maxSpd * 10);
+	forceGens.push_back(enemySpd);
+	enemy->addGen(enemySpd);
 }
 
 void mainGame::plrForward() {
@@ -109,18 +102,11 @@ void mainGame::plrStop() {
 	plrSpeed->stop();
 }
 
-void mainGame::fireParticles(int n) {
-	for (auto s : launchers) {
-		s->emit(n);
+void mainGame::enemiesFire() {
+	for (auto e : enemies) {
+		e->fire();
 	}
 }
-
-void mainGame::toggleParticles() {
-	for (auto s : launchers) {
-		s->toggleEnable();
-	}
-}
-
 
 void mainGame::toggleGravity() {
 	for (auto fg : forceGens) {

@@ -1,7 +1,6 @@
 #include "Player.h"
 
-Player::Player(Vector3D p, float m, float ms, PxShape* s, Vector4 c) : Particle(p, {0,0,0}, m, 1, nullptr, s, c),  maxSpd(ms) {
-	horizontallyLocked = true;
+Player::Player(Vector3D p, float m, float ms, PxShape* s, Vector4 c) : Particle(p, {0,0,0}, m, 1, nullptr, s, c),  maxSpd(ms), horizontallyLocked(true) {
 }
 
 void Player::update(float t) {
@@ -25,7 +24,7 @@ void Player::integrate(float t) {
 	if (vel.zV > maxSpd) vel.zV = maxSpd;
 	else if (vel.zV < -maxSpd) vel.zV = -maxSpd;
 
-	cout << vel << " | " << accel << endl;
+	//cout << vel << " | " << accel << endl;
 
 	// Damping
 	//vel *= powf(damping, t);
@@ -38,6 +37,10 @@ void Player::integrate(float t) {
 
 void Player::addGen(ForceGenerator* fg) {
 	forces.push_back(fg);
+}
+
+Vector3D Player::returnPos() {
+	return { tr.p.x, tr.p.y, tr.p.z };
 }
 
 Vector3D Player::getAccel() {

@@ -254,6 +254,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainGame.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="Axis.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FG_Library.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="mainGame.h" />
