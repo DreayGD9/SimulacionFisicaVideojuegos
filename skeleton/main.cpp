@@ -108,6 +108,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		break;
 	}
+	case 'E':
+	{
+		game->explodeAll();
+		break;
+	}
+	case 'F':
+	{
+		game->toggleParticles();
+		break;
+	}
 	default:
 		break;
 	}

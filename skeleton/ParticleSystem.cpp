@@ -94,7 +94,8 @@ void ParticleSystem::addGen(ForceGenerator* fg) {
 Vector3D ParticleSystem::getAccel(float m, Vector3D p, Vector3D v) {
 	Vector3D a = { 0,0,0 };
 	for (auto f : forces) {
-		a += f->getForce(m, p, v);
+		Vector3D force = f->getForce(m, p, v);
+		a += force;
 	}
 	return a;
 }
