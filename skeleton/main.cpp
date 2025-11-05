@@ -127,6 +127,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 		game->enemiesFire();
 		break;
+	
+	case 'Z':
+	{
+		game->togglePlrSpeed();
+		break;
+	}
+	case 'X':
+	{
+		game->toggleEnmSpeed();
+		break;
 	}
 	case 'R':
 	{

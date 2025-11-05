@@ -30,6 +30,8 @@ public:
 
 	void enemiesFire();
 
+	void togglePlrSpeed();
+	void toggleEnmSpeed();
 	void toggleGravity();
 	void toggleWind();
 	void toggleWhirlwind();
