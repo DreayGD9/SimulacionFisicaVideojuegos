@@ -123,14 +123,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->plrStop();
 		break;
 	}
-	case 'F':
-	{
-		game->enemiesFire();
-		break;
-	}
 	case 'E':
 	{
-		game->explodeAll();
+		game->enemiesFire();
 		break;
 	}
 	case 'R':
@@ -146,6 +141,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case 'Y':
 	{
 		game->toggleWhirlwind();
+		break;
+	}
+	case 'U':
+	{
+		game->explodeAll();
 		break;
 	}
 	default:

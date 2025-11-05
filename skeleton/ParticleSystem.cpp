@@ -13,6 +13,7 @@ ParticleSystem::ParticleSystem(int n,
 	float spD,
 	float sT,
 	float rT,
+	float pM,
 	PxShape* s,
 	Vector4 c) {
 
@@ -28,6 +29,7 @@ ParticleSystem::ParticleSystem(int n,
 	spDelay = spD;
 	sTime = sT;
 	rTime = rT;
+	pMass = pM;
 
 	shape = s;
 	colour = c;
@@ -46,9 +48,8 @@ Vector3D ParticleSystem::genRandVec(Vector3D ini, Vector3D range) {
 void ParticleSystem::createParticle() {
 	Vector3D pP = genRandVec(sPos, rPos);
 	Vector3D pV = genRandVec(sDir, rDir);
-	float pM = 10;
 	float pL = sTime + dist(gen) * rTime;
-	particles.push_back(make_unique<Particle>(pP, pV, pM, pL, this, shape, colour));
+	particles.push_back(make_unique<Particle>(pP, pV, pMass, pL, this, shape, colour));
 	nParticles++;
 }
 

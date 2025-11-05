@@ -11,6 +11,12 @@ mainGame::mainGame() {
 	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
 	forceGens.push_back(FG_gravity);
 
+	// Tightrope
+
+	PxTransform* TransformC = new PxTransform({ 0, -5, 0 });
+	PxShape* XaxisShape = CreateShape(PxBoxGeometry(1000, 0.5, 0.5));
+	RenderItem* Tightrope = new RenderItem(XaxisShape, TransformC, { 1,0,0,1 });
+
 	// Player
 
 	createPlayer();
@@ -67,7 +73,7 @@ void mainGame::createPlayer() {
 	Vector3D pos = { 0,0,0 };
 	float mass = 10;
 	float maxSpd = 25;
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
+	PxShape* shape = CreateShape(PxSphereGeometry(5));
 	Vector4 colour = { 1,1,1,1 };
 	plr = new Player(pos, mass, maxSpd, shape, colour);
 
@@ -78,18 +84,24 @@ void mainGame::createPlayer() {
 
 void mainGame::createEnemy() {
 	
-	Vector3D pos = { 0,0,-20 };
+	Vector3D pos = { 0,0,-50 };
 	float mass = 10;
-	float maxSpd = 25;
-	PxShape* shape = CreateShape(PxSphereGeometry(1));
-	Vector4 colour = { 1,0,0,1 };
+	float maxSpd = 50;
+	PxShape* shape = CreateShape(PxSphereGeometry(5));
+	Vector4 colour = { 1,0,0,0.5 };
+	float shotDelay = 0.01;
+	float shotPower = 100;
 
-	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, 3, plr);
+	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, shotDelay, shotPower, plr);
 	enemies.push_back(enemy);
 
 	FG_PlrSpeed* enemySpd = new FG_PlrSpeed("ENM_SPEED", maxSpd * 100, maxSpd * 10);
 	forceGens.push_back(enemySpd);
 	enemy->addGen(enemySpd);
+
+	for (auto fg : forceGens) {
+		if (fg->getType() != FG_PLRSPEED) enemy->addGenToShots(fg);
+	}
 }
 
 void mainGame::plrForward() {

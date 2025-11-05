@@ -2,26 +2,40 @@
 #include "Player.h"
 #include "FG_Library.h"
 
-Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, Player* pl) : Particle(p, { 0,0,0 }, m, 1, nullptr, s, c), maxSpd(ms), player(pl), horizontallyLocked(true), shotDelay(d) {
-	int nParticles = 100;
+Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, float pow, Player* pl) : Particle(p, { 0,0,0 }, m, 1, nullptr, s, c), maxSpd(ms), player(pl), horizontallyLocked(true), shotDelay(d), shotPower(pow) {
+	int nParticles = 500;
 	Vector3D pos = { 0,0,0 };
-	Vector3D dir = { 20,10,5 };
+	Vector3D dir = { 0,0,0 };
 	Vector3D posR = { 0,0,0 };
-	Vector3D dirR = { 2,2,2 };
-	float spawnDelay = 0.01;
+	Vector3D dirR = { 5,5,5 };
 	float lifetime = 5;
 	float lifetimeR = 1;
-	PxShape* partShape = CreateShape(PxBoxGeometry(0.5, 0.5, 0.5));
+	float mass = 10;
+	PxShape* partShape = CreateShape(PxBoxGeometry(1, 1, 1));
 	Vector4 colour = { 1,1,1,1 };
-	launcher = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, partShape, colour);
+	launcher = new ParticleSystem(nParticles, pos, dir, posR, dirR, shotDelay, lifetime, lifetimeR, mass, partShape, colour);
 	launcher->enable(false);
 }
 
 void Enemy::update(float t) {
 
-	// Attempt matching X axis position of player
 
 	Vector3D playerPos = player->returnPos();
+	Vector3D selfPos = { tr.p.x, tr.p.y, tr.p.z };
+
+	// Place the launcher on the enemy's position then aim at the player
+
+	launcher->update(t);
+	launcher->updatePos(selfPos);
+
+	Vector3D aimDir = Vector3D(playerPos - selfPos).normalize();
+	Vector3D aim = { aimDir.xV * shotPower, shotPower / 20, aimDir.zV * shotPower };
+
+	launcher->updateDir(aim);
+
+
+	// Attempt matching X axis position of player and move towards it
+
 
 	for (auto fg : forces) {
 		if (fg->getType() == FG_PLRSPEED && fg->getName() == "ENM_SPEED") {
@@ -34,9 +48,6 @@ void Enemy::update(float t) {
 			}
 		}
 	}
-
-	// Fire every so often
-
 	integrate(t);
 }
 
@@ -70,6 +81,9 @@ void Enemy::integrate(float t) {
 
 void Enemy::addGen(ForceGenerator* fg) {
 	forces.push_back(fg);
+}
+void Enemy::addGenToShots(ForceGenerator* fg) {
+	launcher->addGen(fg);
 }
 
 void Enemy::fire() {

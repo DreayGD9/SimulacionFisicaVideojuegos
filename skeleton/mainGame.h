@@ -35,7 +35,7 @@ public:
 	void toggleWhirlwind();
 	void explodeAll();
 
-	static const bool GAME_DEBUG = true;
+	static const bool GAME_DEBUG = false;
 
 private:
 

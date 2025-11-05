@@ -17,6 +17,7 @@ public:
 		float spD,
 		float sT, 
 		float rT,
+		float pM,
 		PxShape* s,
 		Vector4 c);
 	~ParticleSystem() {};
@@ -49,7 +50,7 @@ private:
 	Vector3D sPos, sDir, rPos, rDir;
 	float sTime, rTime;
 	float spDelay;
-	float yInclination;
+	float pMass;
 
 	float lastSpawnT = 0;
 
