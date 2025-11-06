@@ -161,26 +161,27 @@ public:
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
-		//cout << forceVector << endl;
-		return forceVector / m;
+		if (active) return forceVector / m;
+		else return { 0,0,0 };
 	};
 
 	void update(double t) {
-		if (holdingForward) {
-			currStr += str * t;
-			if (currStr >= maxStr) currStr = maxStr;
+		if (active) {
+			if (holdingForward) {
+				currStr += str * t;
+				if (currStr >= maxStr) currStr = maxStr;
+			}
+			else if (holdingBackward) {
+				currStr -= str * t;
+				if (currStr <= -maxStr) currStr = -maxStr;
+			}
+			else {
+				if (currStr > 0.1) currStr -= str * t;
+				else if (currStr < -0.1) currStr += str * t;
+				else currStr = 0;
+			}
+			forceVector = { currStr, 0, 0 };
 		}
-		else if (holdingBackward) {
-			currStr -= str * t;
-			if (currStr <= -maxStr) currStr = -maxStr;
-		}
-		else {
-			if (currStr > 0.1) currStr -= str * t;
-			else if (currStr < -0.1) currStr += str * t;
-			else currStr = 0;
-		}
-		forceVector = { currStr, 0, 0 };
-		//cout << holdingForward << " " << holdingBackward << " | " << currStr << endl;
 	}
 
 	void forward() {
