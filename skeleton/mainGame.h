@@ -32,6 +32,7 @@ public:
 
 	void togglePlrSpeed();
 	void toggleEnmSpeed();
+
 	void toggleGravity();
 	void toggleWind();
 	void toggleWhirlwind();

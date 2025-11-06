@@ -138,6 +138,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->toggleEnmSpeed();
 		break;
 	}
+	case 'Z':
+	{
+		game->togglePlrSpeed();
+		break;
+	}
+	case 'X':
+	{
+		game->toggleEnmSpeed();
+		break;
+	}
 	case 'R':
 	{
 		game->toggleGravity();
