@@ -120,6 +120,22 @@ void mainGame::enemiesFire() {
 	}
 }
 
+void mainGame::togglePlrSpeed() {
+	for (auto fg : forceGens) {
+		if (fg->getType() == FG_PLRSPEED && fg->getName() == "PLR_SPEED") {
+			fg->toggleActive();
+		}
+	}
+}
+
+void mainGame::toggleEnmSpeed() {
+	for (auto fg : forceGens) {
+		if (fg->getType() == FG_PLRSPEED && fg->getName() == "ENM_SPEED") {
+			fg->toggleActive();
+		}
+	}
+}
+
 void mainGame::toggleGravity() {
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_CONSTANT && fg->getName() == "GRAVITY") {
