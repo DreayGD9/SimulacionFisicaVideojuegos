@@ -33,8 +33,8 @@ mainGame::mainGame() {
 	EJEMPLO DE SISTEMA DE PARTÍCULAS
 	--------------------------------------------------------------------
 	
-	*/
-	
+
+
 	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
 	forceGens.push_back(FG_wind1);
 	FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, false, { 0,0,0 }, 20);
@@ -63,6 +63,8 @@ mainGame::mainGame() {
 	partSystems.push_back(partSys1);
 
 	partSys1->enable(true);
+
+	*/
 }
 
 void mainGame::update(float t) {
