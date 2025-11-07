@@ -25,6 +25,10 @@ mainGame::mainGame() {
 
 	createEnemy();
 
+	// Disparador desde cámara (requisitos enunciado)
+
+	createCameraShooter();
+
 
 	/*
 	
@@ -32,8 +36,6 @@ mainGame::mainGame() {
 	EJEMPLOS DE USO DE LOS GENERADORES DE VIENTO, TORBELLINO Y EXPLOSIÓN
 	EJEMPLO DE SISTEMA DE PARTÍCULAS
 	--------------------------------------------------------------------
-	
-
 
 	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
 	forceGens.push_back(FG_wind1);
@@ -65,6 +67,7 @@ mainGame::mainGame() {
 	partSys1->enable(true);
 
 	*/
+
 }
 
 void mainGame::update(float t) {
@@ -81,6 +84,16 @@ void mainGame::update(float t) {
 	}
 
 	plr->update(t);
+
+	if (camshooter != nullptr) {
+		PxVec3 camE = GetCamera()->getEye();
+		PxVec3 camD = GetCamera()->getDir();
+		Vector3D pos = { camE.x, camE.y, camE.z };
+		Vector3D dir = { camD.x, camD.y, camD.z };
+		float pow = 50;
+		camshooter->updatePos(pos);
+		camshooter->updateDir(dir * pow);
+	}
 }
 
 void mainGame::createPlayer() {
@@ -118,6 +131,28 @@ void mainGame::createEnemy() {
 	}
 }
 
+void mainGame::createCameraShooter() {
+	int nParticles = 500;
+	Vector3D pos = { 0,0,0 };
+	Vector3D dir = { 0,0,0 };
+	Vector3D posR = { 0,0,0 };
+	Vector3D dirR = { 0,0,0 };
+	float spawnDelay = 0.01;
+	float lifetime = 5;
+	float lifetimeR = 1;
+	float mass = 10;
+	PxShape* partShape = CreateShape(PxSphereGeometry(0.5f));
+	Vector4 colour = { 1,1,1,0.5 };
+	camshooter = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, mass, partShape, colour);
+
+	for (auto fg : forceGens) {
+		if (fg->getType() != FG_PLRSPEED) camshooter->addGen(fg);
+	}
+
+	partSystems.push_back(camshooter);
+	camshooter->enable(false);
+}
+
 void mainGame::plrForward() {
 	plrSpeed->forward();
 }
@@ -131,6 +166,12 @@ void mainGame::plrStop() {
 void mainGame::enemiesFire() {
 	for (auto e : enemies) {
 		e->fire();
+	}
+}
+
+void mainGame::cameraFire() {
+	if (camshooter != nullptr) {
+		camshooter->emit(1);
 	}
 }
 

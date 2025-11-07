@@ -128,6 +128,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->enemiesFire();
 		break;
 	}
+	case 'Q':
+	{
+		game->cameraFire();
+		break;
+	}
 	case 'Z':
 	{
 		game->togglePlrSpeed();

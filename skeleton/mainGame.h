@@ -23,12 +23,14 @@ public:
 
 	void createPlayer();
 	void createEnemy();
+	void createCameraShooter();
 
 	void plrForward();
 	void plrBackward();
 	void plrStop();
 
 	void enemiesFire();
+	void cameraFire();
 
 	void togglePlrSpeed();
 	void toggleEnmSpeed();
@@ -44,6 +46,7 @@ private:
 
 	Player* plr;
 	FG_PlrSpeed* plrSpeed;
+	ParticleSystem* camshooter;
 
 	vector<Enemy*> enemies;
 	vector<ForceGenerator*> forceGens;
