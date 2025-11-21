@@ -17,7 +17,11 @@ public:
 	Particle(Vector3D p, Vector3D v, float m, float l, ParticleSystem* ps, PxShape* s = CreateShape(PxSphereGeometry(0.5f)), Vector4 c = {1,1,1,1});
 	~Particle();
 
-	void addForce(Vector3D f);
+	void setAnchored(bool a) { anchored = a; };
+	void toggleAnchored() { anchored != anchored; };
+	void setDamping(float d) { damping = d; };
+
+	void addGen(ForceGenerator* force) { forces.push_back(force); };
 
 	Vector3D getPos() { return Vector3D(tr.p.x, tr.p.y, tr.p.z); };
 
@@ -34,8 +38,10 @@ protected:
 
 	float timeAlive;
 
-	vector<Vector3D> forces;
-	float damping = 0.01;
+	bool anchored;
+
+	vector<ForceGenerator*> forces;
+	float damping = 0.99;
 
 	physx::PxTransform tr;
 	RenderItem* renderItem;

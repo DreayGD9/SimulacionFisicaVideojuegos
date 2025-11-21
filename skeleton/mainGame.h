@@ -50,6 +50,7 @@ private:
 
 	vector<Enemy*> enemies;
 	vector<ForceGenerator*> forceGens;
+	vector<Particle*> independentParticles;
 	vector<ParticleSystem*> partSystems;
 };
 

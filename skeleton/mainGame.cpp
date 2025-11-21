@@ -29,6 +29,41 @@ mainGame::mainGame() {
 
 	createCameraShooter();
 
+	// Demo de muelles
+
+	Vector3D pP1 = { 0,-10,0 };
+	Vector3D pP2 = { 0,0,0 };
+	Vector3D pV = { 0,0,0 };
+	float pMass = 10;
+	float pL = -1;
+	PxShape* shape = CreateShape(PxSphereGeometry(0.5f));
+	Vector4 colour = { 1,1,1,1 };
+
+	//Particle* p1 = new Particle(pP1, pV, pMass, pL, nullptr, shape, colour);
+	//Particle* p2 = new Particle(pP2, pV, pMass, pL, nullptr, shape, colour);
+	//p1->setAnchored(true);
+	//independentParticles.push_back(p1);
+	//independentParticles.push_back(p2);
+	//float k = 1;
+	//float length = 10;
+	//FG_Spring* spring1 = new FG_Spring("SPRING1", k, length, p2, true);
+	//FG_Spring* spring2 = new FG_Spring("SPRING2", k, length, p1, true);
+	//p1->addGen(spring1);
+	//p1->addGen(FG_gravity);
+	//p2->addGen(spring2);
+	//p2->addGen(FG_gravity);
+	//forceGens.push_back(spring1);
+	//forceGens.push_back(spring2);
+
+	Particle* pS = new Particle(pP1, pV, pMass, pL, nullptr, shape, colour);
+	pS->setDamping(0.5);
+	independentParticles.push_back(pS);
+	float k = 1;
+	float length = 20;
+	FG_Spring* FG_spring = new FG_Spring("SPRING_A", k, length, nullptr, true, true, { 0,0,0 });
+	pS->addGen(FG_spring);
+	pS->addGen(FG_gravity);
+	forceGens.push_back(FG_spring);
 
 	/*
 	
@@ -78,6 +113,12 @@ void mainGame::update(float t) {
 	for (auto fg : forceGens) {
 		fg->update(t);
 	}
+
+	for (auto p : independentParticles) {
+		p->integrate(t);
+		cout << p->getPos();
+	}
+	cout << endl;
 
 	for (auto ps : partSystems) {
 		ps->update(t);

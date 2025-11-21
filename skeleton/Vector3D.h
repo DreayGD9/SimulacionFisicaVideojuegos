@@ -10,7 +10,8 @@ public:
 	Vector3D(float x = 0, float y = 0, float z = 0) : xV(x), yV(y), zV(z) {};
 
 	Vector3D normalize() {
-		return Vector3D(xV/magnitude(), yV/magnitude(), zV/magnitude());
+		if (magnitude() != 0) return Vector3D(xV / magnitude(), yV / magnitude(), zV / magnitude());
+		else return { 0,0,0 };
 	}
 	float magnitude() {
 		return std::sqrt(xV*xV + yV*yV + zV*zV);
