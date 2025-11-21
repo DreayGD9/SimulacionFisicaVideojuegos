@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Particle.h"
-#include "ForceGenerator.h"
 #include <vector>
 
 class Axis

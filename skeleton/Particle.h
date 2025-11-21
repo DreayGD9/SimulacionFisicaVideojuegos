@@ -19,6 +19,8 @@ public:
 
 	void addForce(Vector3D f);
 
+	Vector3D getPos() { return Vector3D(tr.p.x, tr.p.y, tr.p.z); };
+
 	bool canExpire() { return timeAlive >= lifetime; };
 
 	virtual void integrate(double t);

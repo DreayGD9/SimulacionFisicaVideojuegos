@@ -1,6 +1,8 @@
 #pragma once
 
 #include "ForceGenerator.h"
+#include "Particle.h"
+
 
 // --------------------------
 // CONSTANTE
@@ -144,6 +146,35 @@ private:
 
 	float tSinceLastBoom;
 	float boomDelay;
+};
+
+// --------------------------
+// MUELLE
+// --------------------------
+
+class FG_Spring : public ForceGenerator
+{
+public:
+	FG_Spring(string n, float elasticity, float restingLength, Particle* other, bool a, bool areaAffected = false, Vector3D areaPos = { 0,0,0 }, float areaRad = 0) :
+		ForceGenerator(n, FG_SPRING, a, areaAffected, areaPos, areaRad), k(elasticity), rL(restingLength), p2(other) {
+	};
+
+	void setK(float elasticity) { k = elasticity; };
+
+	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		if (active) {
+			Vector3D relativePos = p2->getPos() - p;
+			float length = relativePos.magnitude();
+			float deltaX = length - rL;
+			Vector3D force = relativePos * deltaX * k;
+			return force;
+		}
+		else return { 0,0,0 };
+	};
+private:
+	float k;
+	float rL;
+	Particle* p2;
 };
 
 // --------------------------
