@@ -65,6 +65,24 @@ mainGame::mainGame() {
 	pS->addGen(FG_gravity);
 	forceGens.push_back(FG_spring);
 
+	int nParticles = 500;
+	Vector3D pos = { -40,0,0 };
+	Vector3D dir = { 0,-20,0 };
+	Vector3D posR = { 0,0,0 };
+	Vector3D dirR = { 2,2,2 };
+	float spawnDelay = 0.01;
+	float lifetime = 5;
+	float lifetimeR = 1;
+	float mass = 10;
+	PxShape* partShape = CreateShape(PxSphereGeometry(0.5f));
+	ParticleSystem* partSys1 = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, mass, partShape, colour);
+
+	partSys1->addGen(FG_gravity);
+	partSys1->addGen(FG_spring);
+
+	partSystems.push_back(partSys1);
+	partSys1->enable(true);
+
 	/*
 	
 	--------------------------------------------------------------------
@@ -116,7 +134,6 @@ void mainGame::update(float t) {
 
 	for (auto p : independentParticles) {
 		p->integrate(t);
-		cout << p->getPos();
 	}
 	cout << endl;
 
