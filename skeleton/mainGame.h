@@ -5,8 +5,13 @@
 #include "callbacks.hpp"
 
 #include "Vector3D.h"
+
 #include "Particle.h"
 #include "ParticleSystem.h"
+
+#include "RigidBody_Static.h"
+#include "RigidBody_Dynamic.h"
+
 #include "FG_Library.h"
 
 #include "Player.h"

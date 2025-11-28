@@ -1,20 +1,16 @@
 #pragma once
 
 #include "PxRigidBody.h"
-#include "PxShape.h"
-#include "mainGame.h"
+
+class MainGame;
+class Vector4;
+
+using namespace physx;
 
 class RigidBody_Static
 {
 public:
-	RigidBody_Static(PxTransform transform, PxShape* shape, Vector4 colour, mainGame* game) : 
-		tr(transform), s(shape), g(game) {
-		rigid = g->getPhysics()->createRigidStatic(tr);
-		rigid->attachShape(*s);
-		g->getScene()->addActor(*rigid);
-
-		item = new RenderItem(s, rigid, colour);
-	}
+	RigidBody_Static(PxTransform transform, PxShape* shape, Vector4 colour, mainGame* game);
 private:
 
 	PxRigidStatic* rigid;
