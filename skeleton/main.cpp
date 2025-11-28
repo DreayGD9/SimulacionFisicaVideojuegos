@@ -58,9 +58,9 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 
-	game = new mainGame();
-
 	gScene = gPhysics->createScene(sceneDesc);
+
+	game = new mainGame(gPhysics, gScene);
 }
 
 

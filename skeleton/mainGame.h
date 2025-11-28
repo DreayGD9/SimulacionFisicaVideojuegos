@@ -5,7 +5,6 @@
 #include "callbacks.hpp"
 
 #include "Vector3D.h"
-#include "Axis.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "FG_Library.h"
@@ -16,7 +15,7 @@
 class mainGame
 {
 public:
-	mainGame();
+	mainGame(PxPhysics* physics, PxScene* scene);
 	~mainGame();
 
 	void update(float t);
@@ -40,9 +39,15 @@ public:
 	void toggleWhirlwind();
 	void explodeAll();
 
+	PxPhysics* getPhysics() { return gPhysics; }
+	PxScene* getScene() { return gScene; }
+
 	static const bool GAME_DEBUG = false;
 
 private:
+
+	PxPhysics* gPhysics;
+	PxScene* gScene;
 
 	Player* plr;
 	FG_PlrSpeed* plrSpeed;

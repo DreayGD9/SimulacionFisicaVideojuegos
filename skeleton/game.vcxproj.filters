@@ -16,6 +16,7 @@
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="RigidBody_Dynamic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -36,6 +37,8 @@
     <ClInclude Include="FG_Library.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Floor.h" />
+    <ClInclude Include="RigidBody_Static.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

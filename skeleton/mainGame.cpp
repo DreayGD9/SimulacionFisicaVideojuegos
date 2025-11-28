@@ -1,6 +1,12 @@
 #include "mainGame.h"
 
-mainGame::mainGame() {
+#include "Floor.h"
+#include "Axis.h"
+
+mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
+
+	gPhysics = physics;
+	gScene = scene;
 
 	// Axis
 
@@ -13,9 +19,9 @@ mainGame::mainGame() {
 
 	// Tightrope
 
-	PxTransform* TransformC = new PxTransform({ 0, -5, 0 });
-	PxShape* XaxisShape = CreateShape(PxBoxGeometry(1000, 0.5, 0.5));
-	RenderItem* Tightrope = new RenderItem(XaxisShape, TransformC, { 1,0,0,1 });
+	PxTransform* RopeTransform = new PxTransform({ 0, -5, 0 });
+	PxShape* RopeShape = CreateShape(PxBoxGeometry(1000, 0.5, 0.5));
+	RenderItem* Tightrope = new RenderItem(RopeShape, RopeTransform, { 1,0,0,1 });
 
 	// Player
 
@@ -29,6 +35,12 @@ mainGame::mainGame() {
 
 	createCameraShooter();
 
+	// Suelo
+
+	PxTransform FloorTransform = PxTransform({ 0, -20, 0 });
+	Floor floor = Floor(FloorTransform, 100, 100, 1, { 1,1,1,1 }, this);
+
+	/*
 	// Demo de muelles
 
 	Vector3D pP1 = { 0,-10,0 };
@@ -82,6 +94,7 @@ mainGame::mainGame() {
 
 	partSystems.push_back(partSys1);
 	partSys1->enable(true);
+	*/
 
 	/*
 	
