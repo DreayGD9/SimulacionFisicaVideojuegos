@@ -3,7 +3,6 @@
 #include "Floor.h"
 #include "Axis.h"
 
-
 mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	gPhysics = physics;
@@ -40,11 +39,6 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	PxTransform FloorTransform = PxTransform({ 0, -20, 0 });
 	Floor floor = Floor(FloorTransform, 100, 100, 1, { 1,1,1,1 }, this);
-
-	// Cubo de prueba
-	PxTransform cubeTransform = PxTransform({ 0,100,0 });
-	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10));
-	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 0.15);
 
 	/*
 	// Demo de muelles

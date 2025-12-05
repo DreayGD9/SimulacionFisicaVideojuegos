@@ -17,8 +17,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="RigidBody_Dynamic.h" />
-    <ClCompile Include="RigidBody_Dynamic.cpp" />
-    <ClCompile Include="RigidBody_Static.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />

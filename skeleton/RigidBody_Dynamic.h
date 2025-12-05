@@ -1,25 +1,24 @@
 #pragma once
 
 #include "PxRigidBody.h"
-#include <vector>
-
-class mainGame;
-class ForceGenerator;
-class Vector3D;
-class Vector4;
-class RenderItem;
-
-using namespace physx;
+#include "PxShape.h"
+#include "mainGame.h"
 
 class RigidBody_Dynamic
 {
 public:
-	RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, Vector3D aVelocity, PxShape* shape, Vector4 colour, mainGame* game, float density = 0.15);
+	RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, Vector3D aVelocity, PxShape* shape, Vector4 colour, mainGame* game, float density = 0.15) :
+		tr(transform), s(shape), g(game) {
+		rigid = g->getPhysics()->createRigidDynamic(tr);
+		rigid->attachShape(*s);
+		rigid->setLinearVelocity(PxVec3{ lVelocity.xV, lVelocity.yV, lVelocity.zV });
+		rigid->setAngularVelocity(PxVec3{ aVelocity.xV, aVelocity.yV, aVelocity.zV });
 
-	void addGen(ForceGenerator* force) { forces.push_back(force); };
+		PxRigidBodyExt::updateMassAndInertia(*rigid, density)
+		g->getScene()->addActor(*rigid);
 
-	virtual void integrate(double t);
-
+		item = new RenderItem(s, rigid, colour);
+	}
 private:
 
 	PxRigidDynamic* rigid;
@@ -28,6 +27,4 @@ private:
 	PxTransform tr;
 	PxShape* s;
 	mainGame* g;
-
-	std::vector<ForceGenerator*> forces;
 };
