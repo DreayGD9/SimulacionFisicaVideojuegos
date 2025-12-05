@@ -9,6 +9,8 @@
 #include "ParticleSystem.h"
 #include "FG_Library.h"
 
+#include "RigidBody_Dynamic.h"
+
 #include "Player.h"
 #include "Enemy.h"
 

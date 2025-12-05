@@ -2,7 +2,13 @@
 
 #include "PxRigidBody.h"
 #include "PxShape.h"
-#include "mainGame.h"
+
+#include <PxPhysicsAPI.h>
+#include "Vector3D.h"
+#include "ForceGenerator.h"
+#include "RenderUtils.hpp"
+
+class mainGame;
 
 class RigidBody_Static
 {
