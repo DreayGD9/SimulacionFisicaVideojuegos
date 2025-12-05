@@ -8,12 +8,12 @@
 #include "ForceGenerator.h"
 #include "RenderUtils.hpp"
 
-class mainGame;
+class mainGame; class ObjectSystem;
 
 class RigidBody_Dynamic
 {
 public:
-	RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, Vector3D aVelocity, PxShape* shape, Vector4 colour, mainGame* game, float density = 0.15);
+	RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, Vector3D aVelocity, PxShape* shape, Vector4 colour, mainGame* game, float lifetime = -1, float density = 0.15, ObjectSystem* os = nullptr);
 
 	float getDensity() { return d; };
 	float setDensity(float density) { d = density; };
@@ -35,9 +35,9 @@ private:
 	PxShape* s;
 	mainGame* g;
 
-	float d; 
+	float d;
 	float lifetime;
-	//ParticleSystem* partsys;
+	ObjectSystem* os;
 
 	float timeAlive;
 

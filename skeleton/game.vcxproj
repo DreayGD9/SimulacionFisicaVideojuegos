@@ -259,6 +259,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectSystem.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Player.cpp" />
