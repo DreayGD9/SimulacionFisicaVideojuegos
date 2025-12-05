@@ -42,8 +42,8 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	// Cubo de prueba
 	PxTransform cubeTransform = PxTransform({ 0,100,0 });
-	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10));
-	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 0.15);
+	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(1, 1, 0));
+	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 10);
 
 	/*
 	// Demo de muelles
