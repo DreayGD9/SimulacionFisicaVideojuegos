@@ -45,7 +45,7 @@ public:
 	PxPhysics* getPhysics() { return gPhysics; }
 	PxScene* getScene() { return gScene; }
 
-	static const bool GAME_DEBUG = false;
+	static const bool GAME_DEBUG = true;
 
 private:
 
@@ -60,5 +60,7 @@ private:
 	vector<ForceGenerator*> forceGens;
 	vector<Particle*> independentParticles;
 	vector<ParticleSystem*> partSystems;
+	vector<RigidBody_Dynamic*> independentRigids;
+	vector<ObjectSystem*> objSystems;
 };
 

@@ -41,12 +41,15 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	Floor floor = Floor(FloorTransform, 100, 100, 1, { 1,1,1,1 }, this);
 
 	// Cubo de prueba
-	PxTransform cubeTransform = PxTransform({ 0,100,0 });
+	PxTransform cubeTransform = PxTransform({ 0,10,0 });
 	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(1, 1, 0));
 	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 10);
+	independentRigids.push_back(cube);
 
 	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
 	forceGens.push_back(FG_wind1);
+
+	cube->addGen(FG_wind1);
 
 	/*
 	// Demo de muelles
@@ -159,6 +162,14 @@ void mainGame::update(float t) {
 
 	for (auto ps : partSystems) {
 		ps->update(t);
+	}
+
+	for (auto r : independentRigids) {
+		r->integrate(t);
+	}
+
+	for (auto os : objSystems) {
+		os->update(t);
 	}
 
 	plr->update(t);

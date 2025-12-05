@@ -35,7 +35,7 @@ void RigidBody_Dynamic::integrate(double t) {
 
 	physx::PxVec3 lV = rigid->getLinearVelocity();
 	Vector3D pos = { tr.p.x, tr.p.y, tr.p.z };
-	cout << pos << endl;
+	cout << pos << " ";
 	Vector3D vel = { lV.x, lV.y, lV.z };
 	float mass = rigid->getMass() / 100;
 
@@ -43,13 +43,15 @@ void RigidBody_Dynamic::integrate(double t) {
 		PxVec3 totalForce = os->getTotalForce(mass, pos, vel);
 
 		rigid->addForce(totalForce);
+		cout << totalForce.x << "," << totalForce.y << "," << totalForce.z << "," << endl;
 	}
-	else { // Si es una partícula independiente
-		/*
-		accel = { 0,0,0 };
+	else { // Si es un objeto independiente
+		PxVec3 totalForce = { 0,0,0 };
 		for (auto f : forces) {
-			accel += f->getForce(mass, pos, vel);
+			Vector3D force = f->getForce(mass, pos, vel);
+			totalForce += {force.xV, force.yV, force.zV};
 		}
-		*/
+		rigid->addForce(totalForce);
+		cout << totalForce.x << "," << totalForce.y << "," << totalForce.z << "," << endl;
 	}
 }
