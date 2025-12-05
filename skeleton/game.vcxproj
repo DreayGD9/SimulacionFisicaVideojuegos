@@ -264,7 +264,9 @@
     <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
+    <ClCompile Include="RigidBody_Dynamic.cpp" />
     <ClCompile Include="RigidBody_Dynamic.h" />
+    <ClCompile Include="RigidBody_Static.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Axis.h" />
