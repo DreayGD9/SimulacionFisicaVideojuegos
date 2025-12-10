@@ -27,7 +27,7 @@ public:
 
 	virtual void integrate(double t);
 
-private:
+protected:
 
 	PxRigidDynamic* rigid;
 	RenderItem* item;

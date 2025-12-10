@@ -34,10 +34,6 @@ void RigidBody_Dynamic::integrate(double t) {
 	}
 
 	// Fuerzas
-	for (auto fg : forces) {
-
-	}
-
 	physx::PxVec3 lV = rigid->getLinearVelocity();
 	PxTransform transf = rigid->getGlobalPose();
 	Vector3D pos = { transf.p.x, transf.p.y, transf.p.z };

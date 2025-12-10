@@ -1,12 +1,15 @@
 #pragma once
 
-#include "Particle.h"
+#include "RigidBody_Dynamic.h"
 #include "ForceGenerator.h"
+#include <list>
 
-class Player : public Particle
+class mainGame;
+
+class Player : public RigidBody_Dynamic
 {
 public:
-	Player(Vector3D p, float m, float ms, PxShape* s, Vector4 c);
+	Player(PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGame* g);
 	~Player();
 
 	void update(float t);
@@ -15,11 +18,11 @@ public:
 
 	Vector3D returnPos();
 private:
-	Vector3D getAccel();
 
 	float maxSpd;
 	bool horizontallyLocked;
 
 	list<ForceGenerator*> forces;
+	mainGame* game;
 };
 

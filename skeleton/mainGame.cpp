@@ -46,10 +46,9 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	// Cubo de prueba
 	PxTransform cubeTransform = PxTransform({ 0,10,0 });
 	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
-	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this);
-	independentRigids.push_back(cube);
-
-	cube->addGen(FG_wind1);
+	//RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this);
+	//independentRigids.push_back(cube);
+	//cube->addGen(FG_wind1);
 
 	/*
 	// Demo de muelles
@@ -186,14 +185,15 @@ void mainGame::update(float t) {
 }
 
 void mainGame::createPlayer() {
-	Vector3D pos = { 0,0,0 };
-	float mass = 10;
+	PxTransform transf = PxTransform({ 0,0,0 });
+	float mass = 1;
 	float maxSpd = 25;
-	PxShape* shape = CreateShape(PxSphereGeometry(5));
+	PxShape* shape = CreateShape(PxSphereGeometry(10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
 	Vector4 colour = { 1,1,1,1 };
-	plr = new Player(pos, mass, maxSpd, shape, colour);
 
-	plrSpeed = new FG_PlrSpeed("PLR_SPEED", maxSpd * 100, maxSpd * 10);
+	plr = new Player(transf, mass, maxSpd, shape, colour, this);
+	// PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGame* g
+	plrSpeed = new FG_PlrSpeed("PLR_SPEED", maxSpd * 1000000, maxSpd * 100);
 	forceGens.push_back(plrSpeed);
 	plr->addGen(plrSpeed);
 }

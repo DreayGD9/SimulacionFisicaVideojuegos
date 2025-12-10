@@ -1,6 +1,10 @@
 #include "Player.h"
+#include "mainGame.h"
 
-Player::Player(Vector3D p, float m, float ms, PxShape* s, Vector4 c) : Particle(p, {0,0,0}, m, 1, nullptr, s, c),  maxSpd(ms), horizontallyLocked(true) {
+#include "ForceGenerator.h"
+
+Player::Player(PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGame* g) : 
+	RigidBody_Dynamic(tr, { 0,0,0 }, { 0,0,0 }, s, c, g, -1, m), maxSpd(ms), horizontallyLocked(true), game(g) {
 }
 
 void Player::update(float t) {
@@ -8,14 +12,11 @@ void Player::update(float t) {
 }
 
 void Player::integrate(float t) {
-	// Euler semi-implícito
-	if (t <= 0.0f) return;
 
-	// Calcular aceleración en base a las fuerzas por la masa
-	accel = getAccel();
-
-	// Actualizar velocidad con aceleración
-	vel += accel * t;
+	physx::PxVec3 lV = rigid->getLinearVelocity();
+	PxTransform transf = rigid->getGlobalPose();
+	Vector3D pos = { transf.p.x, transf.p.y, transf.p.z };
+	Vector3D vel = { lV.x, lV.y, lV.z };
 
 	// Limitación de velocidad máxima
 	if (vel.xV > maxSpd) vel.xV = maxSpd;
@@ -24,15 +25,25 @@ void Player::integrate(float t) {
 	if (vel.zV > maxSpd) vel.zV = maxSpd;
 	else if (vel.zV < -maxSpd) vel.zV = -maxSpd;
 
-	//cout << vel << " | " << accel << endl;
+	rigid->setLinearVelocity({ vel.xV, vel.yV, vel.zV });
 
-	// Damping
-	//vel *= powf(damping, t);
+	// Fuerzas
+	if (os != nullptr) { // Si tiene sistema de partículas asociado
+		PxVec3 totalForce = os->getTotalForce(pos, vel);
 
-	// Actualizar posición con velocidad
-	tr.p.x += vel.x() * t;
-	if (!horizontallyLocked) tr.p.y += vel.y() * t;
-	tr.p.z += vel.z() * t;
+		rigid->addForce(totalForce);
+	}
+	else { // Si es un objeto independiente
+		PxVec3 totalForce = { 0,0,0 };
+		for (auto f : forces) {
+			Vector3D force = f->getForceMassless(pos, vel);
+			totalForce += {force.xV, force.yV, force.zV};
+		}
+		cout << totalForce.x << " " << totalForce.y << " " << totalForce.z << " | ";
+		cout << forces.size() << " " << vel << endl;
+		rigid->addForce(totalForce);
+	}
+	
 }
 
 void Player::addGen(ForceGenerator* fg) {
@@ -40,15 +51,6 @@ void Player::addGen(ForceGenerator* fg) {
 }
 
 Vector3D Player::returnPos() {
-	return { tr.p.x, tr.p.y, tr.p.z };
-}
-
-Vector3D Player::getAccel() {
-	Vector3D a = { 0,0,0 };
-	Vector3D pos = { tr.p.x, tr.p.y, tr.p.z };
-	for (auto f : forces) {
-		Vector3D force = f->getForce(mass, pos, vel);
-		a += force;
-	}
-	return a;
+	PxTransform transf = rigid->getGlobalPose();
+	return { transf.p.x, transf.p.y, transf.p.z };
 }
