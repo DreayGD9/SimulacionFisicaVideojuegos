@@ -22,6 +22,11 @@ RigidBody_Dynamic::RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, 
 	os = objectsys;
 }
 
+RigidBody_Dynamic::~RigidBody_Dynamic() {
+	item->release();
+	rigid->release();
+}
+
 void RigidBody_Dynamic::integrate(double t) {
 	// Actualizar tiempo de vida
 	if (lifetime >= 0) {
@@ -36,14 +41,12 @@ void RigidBody_Dynamic::integrate(double t) {
 	physx::PxVec3 lV = rigid->getLinearVelocity();
 	PxTransform transf = rigid->getGlobalPose();
 	Vector3D pos = { transf.p.x, transf.p.y, transf.p.z };
-	cout << pos << " ";
 	Vector3D vel = { lV.x, lV.y, lV.z };
 
 	if (os != nullptr) { // Si tiene sistema de partículas asociado
 		PxVec3 totalForce = os->getTotalForce(pos, vel);
 
 		rigid->addForce(totalForce);
-		cout << totalForce.x << "," << totalForce.y << "," << totalForce.z << "," << endl;
 	}
 	else { // Si es un objeto independiente
 		PxVec3 totalForce = { 0,0,0 };
@@ -52,6 +55,5 @@ void RigidBody_Dynamic::integrate(double t) {
 			totalForce += {force.xV, force.yV, force.zV};
 		}
 		rigid->addForce(totalForce);
-		cout << totalForce.x << "," << totalForce.y << "," << totalForce.z << "," << endl;
 	}
 }

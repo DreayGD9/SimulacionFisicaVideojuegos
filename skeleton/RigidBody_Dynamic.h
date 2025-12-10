@@ -14,6 +14,7 @@ class RigidBody_Dynamic
 {
 public:
 	RigidBody_Dynamic(PxTransform transform, Vector3D lVelocity, Vector3D aVelocity, PxShape* shape, Vector4 colour, mainGame* game, float lifetime = -1, float density = 0.15, ObjectSystem* os = nullptr);
+	~RigidBody_Dynamic();
 
 	float getDensity() { return d; };
 	float setDensity(float density) { d = density; };

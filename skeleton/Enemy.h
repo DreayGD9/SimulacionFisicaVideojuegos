@@ -1,13 +1,14 @@
 #pragma once
 
+#include "ObjectSystem.h"
 #include "ParticleSystem.h"
 
-class Player;
+class Player; class mainGame;
 
 class Enemy : public Particle
 {
 public:
-	Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, float pow, Player* pl);
+	Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, float pow, Player* pl, mainGame* g);
 	~Enemy();
 
 	void update(float t);
@@ -27,8 +28,9 @@ private:
 	float shotDelay;
 	float shotPower;
 
-	ParticleSystem* launcher;
+	ObjectSystem* launcher;
 	list<ForceGenerator*> forces;
 
 	Player* player;
+	mainGame* game;
 };

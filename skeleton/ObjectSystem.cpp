@@ -87,7 +87,6 @@ void ObjectSystem::update(double t) {
 		{
 			objects.erase(objects.begin() + i);
 			nObjects--;
-
 		}
 		else
 		{

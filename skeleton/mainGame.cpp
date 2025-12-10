@@ -42,11 +42,11 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	// Cubo de prueba
 	PxTransform cubeTransform = PxTransform({ 0,10,0 });
-	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(1, 1, 0));
-	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 10);
+	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
+	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this);
 	independentRigids.push_back(cube);
 
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 100000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
+	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 100000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
 	forceGens.push_back(FG_wind1);
 
 	cube->addGen(FG_wind1);
@@ -165,7 +165,7 @@ void mainGame::update(float t) {
 	}
 
 	for (auto r : independentRigids) {
-		r->integrate(t);
+		r->integrate(t);	
 	}
 
 	for (auto os : objSystems) {
@@ -208,7 +208,7 @@ void mainGame::createEnemy() {
 	float shotDelay = 0.01;
 	float shotPower = 100;
 
-	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, shotDelay, shotPower, plr);
+	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, shotDelay, shotPower, plr, this);
 	enemies.push_back(enemy);
 
 	FG_PlrSpeed* enemySpd = new FG_PlrSpeed("ENM_SPEED", maxSpd * 100, maxSpd * 10);

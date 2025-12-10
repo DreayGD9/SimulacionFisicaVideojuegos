@@ -1,19 +1,38 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "FG_Library.h"
+#include "mainGame.h"
 
-Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, float pow, Player* pl) : Particle(p, { 0,0,0 }, m, 1, nullptr, s, c), maxSpd(ms), player(pl), horizontallyLocked(true), shotDelay(d), shotPower(pow) {
+Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, float pow, Player* pl, mainGame* g) : Particle(p, { 0,0,0 }, m, 1, nullptr, s, c), maxSpd(ms), player(pl), horizontallyLocked(true), shotDelay(d), shotPower(pow), game(g) {
 	int nParticles = 500;
 	Vector3D pos = { 0,0,0 };
 	Vector3D dir = { 0,0,0 };
+	Vector3D ang = { 0,0,0 };
 	Vector3D posR = { 0,0,0 };
 	Vector3D dirR = { 5,5,5 };
+	Vector3D angR = { 0,0,0 };
 	float lifetime = 5;
 	float lifetimeR = 1;
 	float mass = 10;
-	PxShape* partShape = CreateShape(PxBoxGeometry(1, 1, 1));
+	PxShape* partShape = CreateShape(PxBoxGeometry(1, 1, 1), game->getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
 	Vector4 colour = { 1,1,1,1 };
-	launcher = new ParticleSystem(nParticles, pos, dir, posR, dirR, shotDelay, lifetime, lifetimeR, mass, partShape, colour);
+	launcher = new ObjectSystem(nParticles, pos, dir, ang, posR, dirR, angR, shotDelay, lifetime, lifetimeR, mass, partShape, colour, game);
+	/*
+	int n,
+		Vector3D sP,
+		Vector3D sD,
+		Vector3D sA,
+		Vector3D pR,
+		Vector3D dR,
+		Vector3D aR,
+		float spD,
+		float sT,
+		float rT,
+		float pM,
+		PxShape* s,
+		Vector4 c,
+		mainGame* g
+	*/
 	launcher->enable(false);
 }
 
@@ -35,7 +54,6 @@ void Enemy::update(float t) {
 
 
 	// Attempt matching X axis position of player and move towards it
-
 
 	for (auto fg : forces) {
 		if (fg->getType() == FG_PLRSPEED && fg->getName() == "ENM_SPEED") {
