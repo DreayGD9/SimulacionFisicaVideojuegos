@@ -187,13 +187,13 @@ void mainGame::update(float t) {
 void mainGame::createPlayer() {
 	PxTransform transf = PxTransform({ 0,0,0 });
 	float mass = 1;
-	float maxSpd = 25;
-	PxShape* shape = CreateShape(PxSphereGeometry(10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
+	float maxSpd = 10000;
+	PxShape* shape = CreateShape(PxSphereGeometry(5), getPhysics()->createMaterial(0.0f, 0.0f, 0.6f));
 	Vector4 colour = { 1,1,1,1 };
 
 	plr = new Player(transf, mass, maxSpd, shape, colour, this);
 	// PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGame* g
-	plrSpeed = new FG_PlrSpeed("PLR_SPEED", maxSpd * 1000000, maxSpd * 100);
+	plrSpeed = new FG_PlrSpeed("PLR_SPEED", maxSpd * 10000000, maxSpd);
 	forceGens.push_back(plrSpeed);
 	plr->addGen(plrSpeed);
 }

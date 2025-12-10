@@ -39,7 +39,7 @@ void Player::integrate(float t) {
 			Vector3D force = f->getForceMassless(pos, vel);
 			totalForce += {force.xV, force.yV, force.zV};
 		}
-		cout << totalForce.x << " " << totalForce.y << " " << totalForce.z << " | ";
+		cout << totalForce.x << " " << totalForce.y << " " << totalForce.z << " | " << maxSpd << " | ";
 		cout << forces.size() << " " << vel << endl;
 		rigid->addForce(totalForce);
 	}
