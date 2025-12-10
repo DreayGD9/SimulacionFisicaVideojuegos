@@ -10,7 +10,7 @@ Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, floa
 	Vector3D ang = { 0,0,0 };
 	Vector3D posR = { 0,0,0 };
 	Vector3D dirR = { 5,5,5 };
-	Vector3D angR = { 0,0,0 };
+	Vector3D angR = { 5,5,5 };
 	float lifetime = 5;
 	float lifetimeR = 1;
 	float mass = 10;

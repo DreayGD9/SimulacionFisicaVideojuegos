@@ -58,7 +58,7 @@ void ObjectSystem::createObject() {
 	Vector3D lV = genRandVec(sDir, rDir);
 	Vector3D aV = genRandVec(sAng, rAng);
 	float pL = sTime + dist(gen) * rTime;
-	objects.push_back(make_unique<RigidBody_Dynamic>(transf, lV, aV, shape, colour, game, pL, pMass));
+	objects.push_back(make_unique<RigidBody_Dynamic>(transf, lV, aV, shape, colour, game, pL, pMass, this));
 	nObjects++;
 }
 
@@ -111,8 +111,10 @@ void ObjectSystem::addGen(ForceGenerator* fg) {
 PxVec3 ObjectSystem::getTotalForce(Vector3D pos, Vector3D v) {
 	PxVec3 tf = { 0,0,0 };
 	for (auto f : forces) {
-		Vector3D force = f->getForceMassless(pos, v);
-		tf += {force.xV, force.yV, force.zV};
+		if (f->getName() != "GRAVITY") {
+			Vector3D force = f->getForceMassless(pos, v);
+			tf += {force.xV, force.yV, force.zV};
+		}
 	}
 	return tf;
 }

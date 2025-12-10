@@ -17,6 +17,9 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
 	forceGens.push_back(FG_gravity);
 
+	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 10000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
+	forceGens.push_back(FG_wind1);
+
 	// Tightrope
 
 	PxTransform* RopeTransform = new PxTransform({ 0, -5, 0 });
@@ -45,9 +48,6 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
 	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this);
 	independentRigids.push_back(cube);
-
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 100000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
-	forceGens.push_back(FG_wind1);
 
 	cube->addGen(FG_wind1);
 
