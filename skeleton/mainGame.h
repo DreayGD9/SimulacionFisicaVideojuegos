@@ -45,7 +45,7 @@ public:
 	PxPhysics* getPhysics() { return gPhysics; }
 	PxScene* getScene() { return gScene; }
 
-	static const bool GAME_DEBUG = true;
+	static const bool GAME_DEBUG = false;
 
 private:
 

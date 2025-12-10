@@ -52,4 +52,6 @@ void RigidBody_Dynamic::integrate(double t) {
 		}
 		rigid->addForce(totalForce);
 	}
+
+
 }

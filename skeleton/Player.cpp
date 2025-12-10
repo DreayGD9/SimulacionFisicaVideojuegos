@@ -5,6 +5,8 @@
 
 Player::Player(PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGame* g) : 
 	RigidBody_Dynamic(tr, { 0,0,0 }, { 0,0,0 }, s, c, g, -1, m), maxSpd(ms), horizontallyLocked(true), game(g) {
+
+	lockY = true;
 }
 
 void Player::update(float t) {
@@ -28,21 +30,18 @@ void Player::integrate(float t) {
 	rigid->setLinearVelocity({ vel.xV, vel.yV, vel.zV });
 
 	// Fuerzas
-	if (os != nullptr) { // Si tiene sistema de partículas asociado
-		PxVec3 totalForce = os->getTotalForce(pos, vel);
+	PxVec3 totalForce = { 0,0,0 };
+	for (auto f : forces) {
+		Vector3D force = f->getForceMassless(pos, vel);
+		totalForce += {force.xV, force.yV, force.zV};
+	}
+	cout << totalForce.x << " " << totalForce.y << " " << totalForce.z << " | " << maxSpd << " | ";
+	cout << forces.size() << " " << vel << endl;
 
-		rigid->addForce(totalForce);
-	}
-	else { // Si es un objeto independiente
-		PxVec3 totalForce = { 0,0,0 };
-		for (auto f : forces) {
-			Vector3D force = f->getForceMassless(pos, vel);
-			totalForce += {force.xV, force.yV, force.zV};
-		}
-		cout << totalForce.x << " " << totalForce.y << " " << totalForce.z << " | " << maxSpd << " | ";
-		cout << forces.size() << " " << vel << endl;
-		rigid->addForce(totalForce);
-	}
+	// Bloqueo de eje horizontal: mantener sobre la cuerda
+	if (lockY) totalForce.y = 0.0f;
+
+	rigid->addForce(totalForce);
 	
 }
 

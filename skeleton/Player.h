@@ -24,5 +24,8 @@ private:
 
 	list<ForceGenerator*> forces;
 	mainGame* game;
+
+	bool lockY;
+	bool lockZ;
 };
 

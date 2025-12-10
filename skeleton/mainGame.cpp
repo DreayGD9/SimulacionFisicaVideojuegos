@@ -2,6 +2,7 @@
 
 #include "Floor.h"
 #include "Axis.h"
+#include "Tightrope.h"
 
 mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
@@ -24,7 +25,7 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	PxTransform* RopeTransform = new PxTransform({ 0, -5, 0 });
 	PxShape* RopeShape = CreateShape(PxBoxGeometry(1000, 0.5, 0.5));
-	RenderItem* Tightrope = new RenderItem(RopeShape, RopeTransform, { 1,0,0,1 });
+	//RenderItem* Tightrope = new RenderItem(RopeShape, RopeTransform, { 1,0,0,1 });
 
 	// Player
 
@@ -43,6 +44,15 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	PxTransform FloorTransform = PxTransform({ 0, -20, 0 });
 	Floor floor = Floor(FloorTransform, 100, 100, 1, { 1,1,1,1 }, this);
 
+	// Cuerda
+
+	Vector3D pos = { 0, -10, 0 };
+	Tightrope rope = Tightrope(pos, 1, 100, { 1,0.5,0.5,1 }, this);
+
+	
+
+	/*
+	
 	// Cubo de prueba
 	PxTransform cubeTransform = PxTransform({ 0,10,0 });
 	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
@@ -50,8 +60,9 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	//independentRigids.push_back(cube);
 	//cube->addGen(FG_wind1);
 
-	/*
 	// Demo de muelles
+
+
 
 	Vector3D pP1 = { 0,-10,0 };
 	Vector3D pP2 = { 0,0,0 };
