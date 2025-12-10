@@ -38,7 +38,7 @@ public:
 	Vector3D getPos() { return sPos; }
 	void addGen(ForceGenerator* force);
 
-	PxVec3 getTotalForce(float m, Vector3D pos, Vector3D v);
+	PxVec3 getTotalForce(Vector3D pos, Vector3D v);
 
 protected:
 	vector<unique_ptr<RigidBody_Dynamic>> objects;

@@ -16,12 +16,17 @@ public:
 	};
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		if (mA) return getForceMassless(p, v) / m;
+		else return getForceMassless(p, v);
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active && (!aA || (aA && isWithinArea(p)))) {
-			if (mA) return force / m;
-			else return force;
+			return force;
 		}
 		else return { 0,0,0 };
 	}
+
 private:
 	Vector3D force;
 	bool mA;
@@ -39,8 +44,12 @@ public:
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		return getForceMassless(p, v) / m;
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active && (!aA || (aA && isWithinArea(p)))) {
-			return ((wS * wP) - v) / m;
+			return ((wS * wP) - v);
 		}
 		else return { 0,0,0 };
 	};
@@ -61,6 +70,10 @@ public:
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		return getForceMassless(p, v) / m;
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active && (!aA || (aA && isWithinArea(p)))) {
 			float sX = -(p.xV - aP.xV) * wP;
 			float sY = 50 - ((p.yV - aP.yV) * wP);
@@ -68,7 +81,7 @@ public:
 
 			Vector3D result = { sX, sY, sZ };
 
-			return result / m;
+			return result;
 		}
 		else return { 0,0,0 };
 	};
@@ -88,6 +101,10 @@ public:
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		return getForceMassless(p, v) / m;
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 
 		if (true) {
 			float dx = p.xV - aP.xV;
@@ -109,7 +126,7 @@ public:
 
 				Vector3D result = { rX, rY, rZ };
 
-				return result / m;
+				return result;
 			}
 		}
 		else return { 0,0,0 };
@@ -162,6 +179,10 @@ public:
 	void setK(float elasticity) { k = elasticity; };
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
+		return getForceMassless(p, v) / m;
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active) {
 			Vector3D relativePos;
 			if (a) relativePos = aP - p;
@@ -197,7 +218,11 @@ public:
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
-		if (active) return forceVector / m;
+		return getForceMassless(p, v) / m;
+	}
+
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
+		if (active) return forceVector;
 		else return { 0,0,0 };
 	};
 

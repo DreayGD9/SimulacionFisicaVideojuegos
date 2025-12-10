@@ -109,10 +109,10 @@ void ObjectSystem::addGen(ForceGenerator* fg) {
 	forces.push_back(fg);
 }
 
-PxVec3 ObjectSystem::getTotalForce(float m, Vector3D pos, Vector3D v) {
+PxVec3 ObjectSystem::getTotalForce(Vector3D pos, Vector3D v) {
 	PxVec3 tf = { 0,0,0 };
 	for (auto f : forces) {
-		Vector3D force = f->getForce(m, pos, v);
+		Vector3D force = f->getForceMassless(pos, v);
 		tf += {force.xV, force.yV, force.zV};
 	}
 	return tf;

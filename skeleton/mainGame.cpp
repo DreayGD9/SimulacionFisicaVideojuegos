@@ -46,7 +46,7 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this, 10);
 	independentRigids.push_back(cube);
 
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
+	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 100000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
 	forceGens.push_back(FG_wind1);
 
 	cube->addGen(FG_wind1);

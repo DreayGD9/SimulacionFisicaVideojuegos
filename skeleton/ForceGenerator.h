@@ -33,7 +33,8 @@ public:
 
 	string getName() { return name; };
 	FG_TYPE getType() { return type; };
-	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) { return Vector3D(0,0,0); };
+	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) { return Vector3D(0, 0, 0); };
+	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) { return Vector3D(0, 0, 0); };
 	virtual void update(double t) {};
 
 	bool isWithinArea(Vector3D pos);
