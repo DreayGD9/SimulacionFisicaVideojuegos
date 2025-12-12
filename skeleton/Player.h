@@ -15,8 +15,6 @@ public:
 	void update(float t);
 	void integrate(float t);
 	void addGen(ForceGenerator* force);
-
-	Vector3D returnPos();
 private:
 
 	float maxSpd;

@@ -21,7 +21,10 @@ public:
 
 	void addGen(ForceGenerator* force) { forces.push_back(force); };
 
-	Vector3D getPos() { return Vector3D(tr.p.x, tr.p.y, tr.p.z); };
+	Vector3D getPos() {
+		PxTransform transf = rigid->getGlobalPose();
+		return { transf.p.x, transf.p.y, transf.p.z };
+	}
 
 	bool canExpire() { return timeAlive >= lifetime; };
 

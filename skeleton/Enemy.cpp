@@ -39,7 +39,7 @@ Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, floa
 void Enemy::update(float t) {
 
 
-	Vector3D playerPos = player->returnPos();
+	Vector3D playerPos = player->getPos();
 	Vector3D selfPos = { tr.p.x, tr.p.y, tr.p.z };
 
 	// Place the launcher on the enemy's position then aim at the player

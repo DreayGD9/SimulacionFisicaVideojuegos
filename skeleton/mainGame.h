@@ -24,6 +24,11 @@ public:
 
 	void update(float t);
 
+	void enablePhysics();
+	void disablePhysics();
+
+	void endGame();
+
 	void createPlayer();
 	void createEnemy();
 	void createCameraShooter();
@@ -49,6 +54,10 @@ public:
 	static const bool GAME_DEBUG = false;
 
 private:
+
+	bool game;
+
+	float deathY = -35;
 
 	PxPhysics* gPhysics;
 	PxScene* gScene;

@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-std::string display_text = "This is a test";
+std::string display_text = "Don't get knocked off the tightrope!";
 
 
 using namespace physx;

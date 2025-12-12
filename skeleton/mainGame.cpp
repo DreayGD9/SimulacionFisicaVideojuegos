@@ -6,6 +6,8 @@
 
 mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
+	game = true;
+
 	gPhysics = physics;
 	gScene = scene;
 
@@ -162,6 +164,9 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 }
 
 void mainGame::update(float t) {
+
+	if (!game) return;
+
 	for (auto e : enemies) {
 		e->update(t);
 	}
@@ -191,6 +196,9 @@ void mainGame::update(float t) {
 	}
 
 	plr->update(t);
+	if (plr->getPos().yV <= deathY) {
+		endGame();
+	}
 
 	if (camshooter != nullptr) {
 		PxVec3 camE = GetCamera()->getEye();
@@ -201,6 +209,32 @@ void mainGame::update(float t) {
 		camshooter->updatePos(pos);
 		camshooter->updateDir(dir * pow);
 	}
+}
+
+void mainGame::enablePhysics() {
+	PxU32 nbActors = gScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC);
+	if (nbActors == 0) return;
+
+	std::vector<PxRigidDynamic*> dynamics(nbActors);
+	gScene->getActors(PxActorTypeFlag::eRIGID_DYNAMIC, (PxActor**)dynamics.data(), nbActors);
+
+	for (PxRigidDynamic* dyn : dynamics) dyn->wakeUp();
+}
+
+void mainGame::disablePhysics() {
+	PxU32 nbActors = gScene->getNbActors(PxActorTypeFlag::eRIGID_DYNAMIC);
+	if (nbActors == 0) return;
+
+	std::vector<PxRigidDynamic*> dynamics(nbActors);
+	gScene->getActors(PxActorTypeFlag::eRIGID_DYNAMIC, (PxActor**)dynamics.data(), nbActors);
+
+	for (PxRigidDynamic* dyn : dynamics) dyn->putToSleep();
+}
+
+void mainGame::endGame() {
+	cout << "GAME END" << endl;
+	game = false;
+	disablePhysics();
 }
 
 void mainGame::createPlayer() {
@@ -262,28 +296,34 @@ void mainGame::createCameraShooter() {
 }
 
 void mainGame::plrForward() {
+	if (!game) return;
 	plrSpeed->forward();
 }
 void mainGame::plrBackward() {
+	if (!game) return;
 	plrSpeed->backward();
 }
 void mainGame::plrStop() {
+	if (!game) return;
 	plrSpeed->stop();
 }
 
 void mainGame::enemiesFire() {
+	if (!game) return;
 	for (auto e : enemies) {
 		e->fire();
 	}
 }
 
 void mainGame::cameraFire() {
+	if (!game) return;
 	if (camshooter != nullptr) {
 		camshooter->emit(1);
 	}
 }
 
 void mainGame::togglePlrSpeed() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_PLRSPEED && fg->getName() == "PLR_SPEED") {
 			fg->toggleActive();
@@ -292,6 +332,7 @@ void mainGame::togglePlrSpeed() {
 }
 
 void mainGame::toggleEnmSpeed() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_PLRSPEED && fg->getName() == "ENM_SPEED") {
 			fg->toggleActive();
@@ -300,6 +341,7 @@ void mainGame::toggleEnmSpeed() {
 }
 
 void mainGame::toggleGravity() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_CONSTANT && fg->getName() == "GRAVITY") {
 			fg->toggleActive();
@@ -308,6 +350,7 @@ void mainGame::toggleGravity() {
 }
 
 void mainGame::toggleWind() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_WIND) {
 			fg->toggleActive();
@@ -316,6 +359,7 @@ void mainGame::toggleWind() {
 }
 
 void mainGame::toggleWhirlwind() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_WHIRLWIND) {
 			fg->toggleActive();
@@ -324,6 +368,7 @@ void mainGame::toggleWhirlwind() {
 }
 
 void mainGame::explodeAll() {
+	if (!game) return;
 	for (auto fg : forceGens) {
 		if (fg->getType() == FG_EXPLOSION) {
 			auto* expl = static_cast<FG_Explosion*>(fg);

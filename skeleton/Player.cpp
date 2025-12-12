@@ -46,8 +46,3 @@ void Player::integrate(float t) {
 void Player::addGen(ForceGenerator* fg) {
 	forces.push_back(fg);
 }
-
-Vector3D Player::returnPos() {
-	PxTransform transf = rigid->getGlobalPose();
-	return { transf.p.x, transf.p.y, transf.p.z };
-}
