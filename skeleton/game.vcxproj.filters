@@ -46,6 +46,8 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectSystem.h" />
     <ClInclude Include="Tightrope.h" />
+    <ClInclude Include="AestheticGenerator.h" />
+    <ClInclude Include="AG_Library.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

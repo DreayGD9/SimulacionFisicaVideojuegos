@@ -11,6 +11,7 @@
 #include "RigidBody_Dynamic.h"
 #include "ObjectSystem.h"
 #include "FG_Library.h"
+#include "AG_Library.h"
 
 #include "Player.h"
 #include "Enemy.h"
@@ -62,5 +63,7 @@ private:
 	vector<ParticleSystem*> partSystems;
 	vector<RigidBody_Dynamic*> independentRigids;
 	vector<ObjectSystem*> objSystems;
+
+	vector<AestheticGenerator*> AGs;
 };
 

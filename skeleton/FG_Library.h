@@ -65,8 +65,8 @@ private:
 class FG_Whirlwind : public ForceGenerator
 {
 public:
-	FG_Whirlwind(string n, float wPow, bool a, Vector3D areaPos = { 0,0,0 }, float areaRad = 1) :
-		ForceGenerator(n, FG_WHIRLWIND, a, true, areaPos, areaRad), wP(wPow) {
+	FG_Whirlwind(string n, float wPow, bool a, Vector3D areaPos = { 0,0,0 }, float areaRad = 1, bool influenceVertical = false) :
+		ForceGenerator(n, FG_WHIRLWIND, a, true, areaPos, areaRad), wP(wPow), iV(influenceVertical) {
 	}
 
 	virtual Vector3D getForce(float m, Vector3D p, Vector3D v) {
@@ -76,7 +76,8 @@ public:
 	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active && (!aA || (aA && isWithinArea(p)))) {
 			float sX = -(p.xV - aP.xV) * wP;
-			float sY = 50 - ((p.yV - aP.yV) * wP);
+			float sY = 0;
+			if (iV) sY = 50 - ((p.yV - aP.yV) * wP);
 			float sZ = -(p.zV - aP.zV) * wP;
 
 			Vector3D result = { sX, sY, sZ };
@@ -87,6 +88,7 @@ public:
 	};
 private:
 	float wP;
+	bool iV;
 };
 
 // --------------------------
@@ -237,9 +239,7 @@ public:
 				if (currStr <= -maxStr) currStr = -maxStr;
 			}
 			else {
-				if (currStr > 0.1) currStr -= str * t;
-				else if (currStr < -0.1) currStr += str * t;
-				else currStr = 0;
+				currStr = 0;
 			}
 			forceVector = { currStr, 0, 0 };
 		}

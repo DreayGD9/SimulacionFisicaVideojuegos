@@ -37,6 +37,8 @@ public:
 	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) { return Vector3D(0, 0, 0); };
 	virtual void update(double t) {};
 
+	virtual void updatePos(Vector3D pos) { aP = pos; };
+
 	bool isWithinArea(Vector3D pos);
 
 	void setActive(bool a) ;

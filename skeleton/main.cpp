@@ -133,36 +133,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->cameraFire();
 		break;
 	}
-	case 'Z':
-	{
-		game->togglePlrSpeed();
-		break;
-	}
-	case 'X':
-	{
-		game->toggleEnmSpeed();
-		break;
-	}
-	case 'R':
-	{
-		game->toggleGravity();
-		break;
-	}
-	case 'T':
-	{
-		game->toggleWind();
-		break;
-	}
-	case 'Y':
-	{
-		game->toggleWhirlwind();
-		break;
-	}
-	case 'U':
-	{
-		game->explodeAll();
-		break;
-	}
 	default:
 		break;
 	}

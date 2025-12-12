@@ -271,6 +271,7 @@
     <ClCompile Include="RigidBody_Static.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AG_Library.h" />
     <ClInclude Include="Axis.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectSystem.h" />
+    <ClInclude Include="AestheticGenerator.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Player.h" />

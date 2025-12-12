@@ -40,5 +40,6 @@ void ForceGenerator::updateDebugView() {
 	if (mainGame::GAME_DEBUG && debugView != nullptr) {
 		if (active) debugView->color = { 1,1,1,0.5 };
 		else debugView->color = { 1,0,0,0.5 };
+		//debugView->actor->getGlobalPose().p.x = aP.xV
 	}
 }

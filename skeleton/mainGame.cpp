@@ -18,14 +18,8 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
 	forceGens.push_back(FG_gravity);
 
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 10000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
-	forceGens.push_back(FG_wind1);
-
-	// Tightrope
-
-	PxTransform* RopeTransform = new PxTransform({ 0, -5, 0 });
-	PxShape* RopeShape = CreateShape(PxBoxGeometry(1000, 0.5, 0.5));
-	//RenderItem* Tightrope = new RenderItem(RopeShape, RopeTransform, { 1,0,0,1 });
+	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 10000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
+	//forceGens.push_back(FG_wind1);
 
 	// Player
 
@@ -41,15 +35,25 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	// Suelo
 
-	PxTransform FloorTransform = PxTransform({ 0, -20, 0 });
-	Floor floor = Floor(FloorTransform, 100, 100, 1, { 1,1,1,1 }, this);
+	Vector3D floorPos = { 0, -50, 0 };
+	Floor floor = Floor(floorPos, 100, 100, 1, { 1,1,1,1 }, this);
 
 	// Cuerda
 
-	Vector3D pos = { 0, -10, 0 };
-	Tightrope rope = Tightrope(pos, 1, 100, { 1,0.5,0.5,1 }, this);
+	Vector3D ropePos = { 0, -10, 0 };
+	Tightrope rope = Tightrope(ropePos, 1, 100, { 1,0.5,0.5,1 }, this);
 
-	
+	// Obstáculos
+
+	AG_Tornado* tornado = new AG_Tornado("TORNADO1", { 0,0,0 }, true);
+	AGs.push_back(tornado);
+	tornado->move({ 25,0,0 });
+
+	for (auto e : enemies) {
+		for (auto ag : AGs) {
+			e->addGenToShots(ag->getFG());
+		}
+	}
 
 	/*
 	
@@ -180,6 +184,10 @@ void mainGame::update(float t) {
 
 	for (auto os : objSystems) {
 		os->update(t);
+	}
+
+	for (auto ag : AGs) {
+		ag->update(t);
 	}
 
 	plr->update(t);
