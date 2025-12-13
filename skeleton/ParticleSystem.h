@@ -25,6 +25,7 @@ public:
 	void enable(bool e) { enabled = e; };
 	void toggleEnable() { enabled = !enabled; };
 	void emit(int n);
+	void clear();
 
 	virtual void update(double t);
 

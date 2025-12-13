@@ -38,6 +38,8 @@ public:
 	void plrStop();
 
 	void enemiesFire();
+	void moveTornados();
+	void hideTornados();
 	void cameraFire();
 
 	void togglePlrSpeed();
@@ -56,6 +58,20 @@ public:
 private:
 
 	bool game;
+
+	float ropeLength = 100;
+
+	float maxShotDelayMS = 2000;
+	float minShotDelayMS = 500;
+	float shotSpeedup = 0.025;
+	float currShotDelay;
+	float tSinceLastShot;
+
+	float tornadoDist = 30;
+	float tornadoSpawnTimeMS = 10000;
+	float tornadoDespawnTimeMS = 5000;
+	float tornadoTimer;
+	bool hasTornadoSpawned = false;
 
 	float deathY = -35;
 

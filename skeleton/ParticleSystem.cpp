@@ -60,6 +60,14 @@ void ParticleSystem::emit(int n) {
 	for (int i = 0; i < n; i++) createParticle();
 }
 
+void ParticleSystem::clear() {
+	for (int i = 0; i < particles.size(); i++)
+	{
+		particles.erase(particles.begin() + i);
+		nParticles--;
+	}
+}
+
 void ParticleSystem::update(double t) {
 
 	if (enabled) {

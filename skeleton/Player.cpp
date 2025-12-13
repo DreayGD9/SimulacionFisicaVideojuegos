@@ -7,6 +7,7 @@ Player::Player(PxTransform tr, float m, float ms, PxShape* s, Vector4 c, mainGam
 	RigidBody_Dynamic(tr, { 0,0,0 }, { 0,0,0 }, s, c, g, -1, m), maxSpd(ms), horizontallyLocked(true), game(g) {
 
 	lockY = true;
+
 }
 
 void Player::update(float t) {

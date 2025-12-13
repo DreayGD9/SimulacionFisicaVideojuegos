@@ -15,6 +15,8 @@ public:
 	void update(float t);
 	void integrate(float t);
 	void addGen(ForceGenerator* force);
+
+	float getSideMov() { return rigid->getLinearVelocity().x; }
 private:
 
 	float maxSpd;

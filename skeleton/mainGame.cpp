@@ -30,6 +30,8 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	// Enemies
 
 	createEnemy();
+	tSinceLastShot = 0;
+	currShotDelay = maxShotDelayMS / 1000;
 
 	// Disparador desde cámara (requisitos enunciado)
 
@@ -49,7 +51,8 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	AG_Tornado* tornado = new AG_Tornado("TORNADO1", { 0,0,0 }, true);
 	AGs.push_back(tornado);
-	tornado->move({ 25,0,0 });
+	tornado->move({ 0,10000,-tornadoDist });
+	tornadoTimer = 0;
 
 	for (auto e : enemies) {
 		for (auto ag : AGs) {
@@ -195,10 +198,33 @@ void mainGame::update(float t) {
 		ag->update(t);
 	}
 
-	plr->update(t);
-	if (plr->getPos().yV <= deathY) {
-		endGame();
+	tSinceLastShot += t;
+	if (tSinceLastShot >= currShotDelay) {
+		tSinceLastShot = 0;
+		enemiesFire();
+		if (currShotDelay > minShotDelayMS / 1000) {
+			currShotDelay -= shotSpeedup;
+		}
 	}
+	//cout << currShotDelay << " " << tSinceLastShot << endl;
+
+	tornadoTimer += t;
+	if (!hasTornadoSpawned) {
+		if ((tornadoTimer >= tornadoSpawnTimeMS / 1000)) {
+			hasTornadoSpawned = true;
+			tornadoTimer = 0;
+			moveTornados();
+		}
+	}
+	else {
+		if ((tornadoTimer >= tornadoDespawnTimeMS / 1000)) {
+			hasTornadoSpawned = false;
+			tornadoTimer = 0;
+			hideTornados();
+		}
+	}
+	cout << hasTornadoSpawned << " " << tornadoTimer << endl;
+	
 
 	if (camshooter != nullptr) {
 		PxVec3 camE = GetCamera()->getEye();
@@ -208,6 +234,27 @@ void mainGame::update(float t) {
 		float pow = 50;
 		camshooter->updatePos(pos);
 		camshooter->updateDir(dir * pow);
+	}
+
+	plr->update(t);
+	if (plr->getPos().yV <= deathY) {
+		endGame();
+	}
+}
+
+void mainGame::moveTornados() {
+	normal_distribution<float> dist = std::normal_distribution<float>(0, 1);
+	static default_random_engine gen;
+	for (auto t : AGs) {
+
+		float offset = dist(gen) * ropeLength * 0.5;
+		t->move({ offset, 0, -tornadoDist });
+	}
+}
+
+void mainGame::hideTornados() {
+	for (auto t : AGs) {
+		t->move({ 0, 100000, 0 });
 	}
 }
 
@@ -253,13 +300,13 @@ void mainGame::createPlayer() {
 
 void mainGame::createEnemy() {
 	
-	Vector3D pos = { 0,0,-50 };
+	Vector3D pos = { 0,0,-100 };
 	float mass = 10;
 	float maxSpd = 50;
 	PxShape* shape = CreateShape(PxSphereGeometry(5));
 	Vector4 colour = { 1,0,0,0.5 };
 	float shotDelay = 0.01;
-	float shotPower = 100;
+	float shotPower = 50;
 
 	Enemy* enemy = new Enemy(pos, mass, maxSpd, shape, colour, shotDelay, shotPower, plr, this);
 	enemies.push_back(enemy);

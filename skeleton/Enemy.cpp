@@ -9,14 +9,14 @@ Enemy::Enemy(Vector3D p, float m, float ms, PxShape* s, Vector4 c, float d, floa
 	Vector3D dir = { 0,0,0 };
 	Vector3D ang = { 0,0,0 };
 	Vector3D posR = { 0,0,0 };
-	Vector3D dirR = { 5,5,5 };
+	Vector3D dirR = { 5,0,5 };
 	Vector3D angR = { 5,5,5 };
 	float lifetime = 5;
 	float lifetimeR = 1;
 	float mass = 10;
-	PxShape* partShape = CreateShape(PxBoxGeometry(1, 1, 1), game->getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
+	PxShape* projShape = CreateShape(PxBoxGeometry(2, 2, 2), game->getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
 	Vector4 colour = { 1,1,1,1 };
-	launcher = new ObjectSystem(nParticles, pos, dir, ang, posR, dirR, angR, shotDelay, lifetime, lifetimeR, mass, partShape, colour, game);
+	launcher = new ObjectSystem(nParticles, pos, dir, ang, posR, dirR, angR, shotDelay, lifetime, lifetimeR, mass, projShape, colour, game);
 	/*
 	int n,
 		Vector3D sP,
@@ -41,14 +41,17 @@ void Enemy::update(float t) {
 
 	Vector3D playerPos = player->getPos();
 	Vector3D selfPos = { tr.p.x, tr.p.y, tr.p.z };
+	float playerX = player->getSideMov();
 
-	// Place the launcher on the enemy's position then aim at the player
+
+	// Place the launcher on the enemy's position then aim at the player with some prediction
 
 	launcher->update(t);
 	launcher->updatePos(selfPos);
 
+	playerPos += {playerX, 0, 0};
 	Vector3D aimDir = Vector3D(playerPos - selfPos).normalize();
-	Vector3D aim = { aimDir.xV * shotPower, shotPower / 20, aimDir.zV * shotPower };
+	Vector3D aim = { aimDir.xV * shotPower, shotPower / 3, aimDir.zV * shotPower };
 
 	launcher->updateDir(aim);
 

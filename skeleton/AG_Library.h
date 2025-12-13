@@ -11,7 +11,7 @@ class AG_Tornado : public AestheticGenerator
 public:
 	AG_Tornado(string n, Vector3D pos, bool a) : AestheticGenerator(pos), centerPos(pos) {
 
-		r = 35;
+		r = 40;
 
 		string nameFG = n + "_FG_Whirlwind";
 		FG_Whirlwind* whirlwind = new FG_Whirlwind(nameFG, 2000, a, centerPos, r, false);
