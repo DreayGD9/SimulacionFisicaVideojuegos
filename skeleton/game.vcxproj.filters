@@ -17,7 +17,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="RigidBody_Dynamic.h" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectSystem.cpp" />
     <ClCompile Include="RigidBody_Dynamic.cpp" />
     <ClCompile Include="RigidBody_Static.cpp" />
@@ -43,7 +42,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="RigidBody_Static.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectSystem.h" />
     <ClInclude Include="Tightrope.h" />
     <ClInclude Include="AestheticGenerator.h" />

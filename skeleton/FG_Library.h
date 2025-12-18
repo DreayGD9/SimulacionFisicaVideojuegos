@@ -186,6 +186,7 @@ public:
 
 	virtual Vector3D getForceMassless(Vector3D p, Vector3D v) {
 		if (active) {
+
 			Vector3D relativePos;
 			if (a) relativePos = aP - p;
 			else relativePos = p2->getPos() - p;
@@ -193,6 +194,11 @@ public:
 			float length = relativePos.magnitude();
 			float deltaX = length - rL;
 			Vector3D force = relativePos * deltaX * k;
+
+			cout << p2->getPos() << " " << 
+				length << " " << force << endl;
+
+
 			return force;
 		}
 		else return { 0,0,0 };

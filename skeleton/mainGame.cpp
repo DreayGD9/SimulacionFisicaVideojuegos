@@ -15,14 +15,6 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 
 	if (GAME_DEBUG) Axis axis = Axis(0.5, 10, true, 0.5);
 
-	// Force generators
-
-	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
-	forceGens.push_back(FG_gravity);
-
-	//FG_Wind* FG_wind1 = new FG_Wind("WIND1", 10000, { 0, 1, 0 }, false, true, { 0,0,0 }, 40);
-	//forceGens.push_back(FG_wind1);
-
 	// Player
 
 	createPlayer();
@@ -223,7 +215,7 @@ void mainGame::update(float t) {
 			hideTornados();
 		}
 	}
-	cout << hasTornadoSpawned << " " << tornadoTimer << endl;
+	//cout << hasTornadoSpawned << " " << tornadoTimer << endl;
 	
 
 	if (camshooter != nullptr) {
@@ -318,6 +310,30 @@ void mainGame::createEnemy() {
 	for (auto fg : forceGens) {
 		if (fg->getType() != FG_PLRSPEED) enemy->addGenToShots(fg);
 	}
+
+	// Partícula que cuelga: muelle para el enunciado
+
+	Vector3D pP = {0, -20, -100};
+	Vector3D pV = { 0,0,0 };
+	float pM = 10;
+	float pL = -1;
+	PxShape* pS = CreateShape(PxSphereGeometry(2));
+	Vector4 pC = { 0.5,0.5,1,1 };
+
+	Particle* pendulum = new Particle(pP, pV, pM, pL, nullptr, pS, pC);
+	pendulum->setDamping(0.5);
+	independentParticles.push_back(pendulum);
+
+	FG_Constant* FG_gravity = new FG_Constant("GRAVITY", Vector3D(0, -9.8, 0), false, true);
+	forceGens.push_back(FG_gravity);
+
+	float k = 10;
+	float length = 20;
+	FG_Spring* FG_spring = new FG_Spring("SPRING_PENDULUM", k, length, enemy, true, false);
+	forceGens.push_back(FG_spring);
+
+	pendulum->addGen(FG_gravity);
+	pendulum->addGen(FG_spring);
 }
 
 void mainGame::createCameraShooter() {
