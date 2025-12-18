@@ -1,10 +1,14 @@
 
-CONTROLES
+# CONTROLES
 
 J - Acelerar izquierda
+
 L - Acelerar derecha
+
 K - Ralentizar aceleración
+
 WASD - Cámara
+
 ESC - Salir del juego
 
 
