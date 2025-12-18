@@ -195,10 +195,6 @@ public:
 			float deltaX = length - rL;
 			Vector3D force = relativePos * deltaX * k;
 
-			cout << p2->getPos() << " " << 
-				length << " " << force << endl;
-
-
 			return force;
 		}
 		else return { 0,0,0 };

@@ -22,12 +22,10 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 	// Enemies
 
 	createEnemy();
-	tSinceLastShot = 0;
-	currShotDelay = maxShotDelayMS / 1000;
 
-	// Disparador desde cámara (requisitos enunciado)
+	// Disparador desde cámara (requisitos enunciado proyecto intermedio)
 
-	createCameraShooter();
+	//createCameraShooter();
 
 	// Suelo
 
@@ -51,111 +49,6 @@ mainGame::mainGame(PxPhysics* physics, PxScene* scene) {
 			e->addGenToShots(ag->getFG());
 		}
 	}
-
-	/*
-	
-	// Cubo de prueba
-	PxTransform cubeTransform = PxTransform({ 0,10,0 });
-	PxShape* cubeShape = CreateShape(PxBoxGeometry(10, 10, 10), getPhysics()->createMaterial(0.5f, 0.5f, 0.6f));
-	//RigidBody_Dynamic* cube = new RigidBody_Dynamic(cubeTransform, { 0,0,0 }, { 0,0,0 }, cubeShape, { 0,0.5,0,1 }, this);
-	//independentRigids.push_back(cube);
-	//cube->addGen(FG_wind1);
-
-	// Demo de muelles
-
-
-
-	Vector3D pP1 = { 0,-10,0 };
-	Vector3D pP2 = { 0,0,0 };
-	Vector3D pV = { 0,0,0 };
-	float pMass = 10;
-	float pL = -1;
-	PxShape* shape = CreateShape(PxSphereGeometry(0.5f));
-	Vector4 colour = { 1,1,1,1 };
-
-	//Particle* p1 = new Particle(pP1, pV, pMass, pL, nullptr, shape, colour);
-	//Particle* p2 = new Particle(pP2, pV, pMass, pL, nullptr, shape, colour);
-	//p1->setAnchored(true);
-	//independentParticles.push_back(p1);
-	//independentParticles.push_back(p2);
-	//float k = 1;
-	//float length = 10;
-	//FG_Spring* spring1 = new FG_Spring("SPRING1", k, length, p2, true);
-	//FG_Spring* spring2 = new FG_Spring("SPRING2", k, length, p1, true);
-	//p1->addGen(spring1);
-	//p1->addGen(FG_gravity);
-	//p2->addGen(spring2);
-	//p2->addGen(FG_gravity);
-	//forceGens.push_back(spring1);
-	//forceGens.push_back(spring2);
-
-	Particle* pS = new Particle(pP1, pV, pMass, pL, nullptr, shape, colour);
-	pS->setDamping(0.5);
-	independentParticles.push_back(pS);
-	float k = 1;
-	float length = 20;
-	FG_Spring* FG_spring = new FG_Spring("SPRING_A", k, length, nullptr, true, true, { 0,0,0 });
-	pS->addGen(FG_spring);
-	pS->addGen(FG_gravity);
-	forceGens.push_back(FG_spring);
-
-	int nParticles = 500;
-	Vector3D pos = { -40,0,0 };
-	Vector3D dir = { 0,-20,0 };
-	Vector3D posR = { 0,0,0 };
-	Vector3D dirR = { 2,2,2 };
-	float spawnDelay = 0.01;
-	float lifetime = 5;
-	float lifetimeR = 1;
-	float mass = 10;
-	PxShape* partShape = CreateShape(PxSphereGeometry(0.5f));
-	ParticleSystem* partSys1 = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, mass, partShape, colour);
-
-	partSys1->addGen(FG_gravity);
-	partSys1->addGen(FG_spring);
-
-	partSystems.push_back(partSys1);
-	partSys1->enable(true);
-	*/
-
-	/*
-	
-	--------------------------------------------------------------------
-	EJEMPLOS DE USO DE LOS GENERADORES DE VIENTO, TORBELLINO Y EXPLOSIÓN
-	EJEMPLO DE SISTEMA DE PARTÍCULAS
-	--------------------------------------------------------------------
-
-	FG_Wind* FG_wind1 = new FG_Wind("WIND1", 1000, { 0, 0, 1 }, false, true, { 0,0,0 }, 40);
-	forceGens.push_back(FG_wind1);
-	FG_Whirlwind* FG_whirlwind1 = new FG_Whirlwind("WHIRLWIND1", 100, false, { 0,0,0 }, 20);
-	forceGens.push_back(FG_whirlwind1);
-	FG_Explosion* FG_explosion1 = new FG_Explosion("EXPLOSION1", 50000, 100, 3, false, false, { 0, 0, 0 }, 30, 0.15);
-	forceGens.push_back(FG_explosion1);
-
-	int nParticles = 500;
-	Vector3D pos = { -40,0,0 };
-	Vector3D dir = { 20,10,5 };
-	Vector3D posR = { 0,0,0 };
-	Vector3D dirR = { 2,2,2 };
-	float spawnDelay = 0.01;
-	float lifetime = 5;
-	float lifetimeR = 1;
-	float mass = 10;
-	PxShape* partShape = CreateShape(PxSphereGeometry(0.5f));
-	Vector4 colour = { 1,1,1,1 };
-	ParticleSystem* partSys1 = new ParticleSystem(nParticles, pos, dir, posR, dirR, spawnDelay, lifetime, lifetimeR, mass, partShape, colour);
-
-	partSys1->addGen(FG_gravity);
-	partSys1->addGen(FG_wind1);
-	partSys1->addGen(FG_whirlwind1);
-	partSys1->addGen(FG_explosion1);
-
-	partSystems.push_back(partSys1);
-
-	partSys1->enable(true);
-
-	*/
-
 }
 
 void mainGame::update(float t) {
@@ -191,42 +84,47 @@ void mainGame::update(float t) {
 	}
 
 	tSinceLastShot += t;
-	if (tSinceLastShot >= currShotDelay) {
-		tSinceLastShot = 0;
-		enemiesFire();
-		if (currShotDelay > minShotDelayMS / 1000) {
-			currShotDelay -= shotSpeedup;
-		}
-	}
-	//cout << currShotDelay << " " << tSinceLastShot << endl;
-
-	tornadoTimer += t;
-	if (!hasTornadoSpawned) {
-		if ((tornadoTimer >= tornadoSpawnTimeMS / 1000)) {
-			hasTornadoSpawned = true;
-			tornadoTimer = 0;
-			moveTornados();
+	if (!startedShooting) {
+		if (tSinceLastShot >= timeuntilShootingMS / 1000) {
+			tSinceLastShot = 0;
+			startedShooting = true;
 		}
 	}
 	else {
-		if ((tornadoTimer >= tornadoDespawnTimeMS / 1000)) {
-			hasTornadoSpawned = false;
-			tornadoTimer = 0;
-			hideTornados();
+		if (tSinceLastShot >= currShotDelay) {
+			tSinceLastShot = 0;
+			enemiesFire();
+			if (currShotDelay > minShotDelayMS / 1000) {
+				currShotDelay -= shotSpeedup;
+			}
+		}
+
+		tornadoTimer += t;
+		if (!hasTornadoSpawned) {
+			if ((tornadoTimer >= tornadoSpawnTimeMS / 1000)) {
+				hasTornadoSpawned = true;
+				tornadoTimer = 0;
+				moveTornados();
+			}
+		}
+		else {
+			if ((tornadoTimer >= tornadoDespawnTimeMS / 1000)) {
+				hasTornadoSpawned = false;
+				tornadoTimer = 0;
+				hideTornados();
+			}
 		}
 	}
-	//cout << hasTornadoSpawned << " " << tornadoTimer << endl;
-	
 
-	if (camshooter != nullptr) {
-		PxVec3 camE = GetCamera()->getEye();
-		PxVec3 camD = GetCamera()->getDir();
-		Vector3D pos = { camE.x, camE.y, camE.z };
-		Vector3D dir = { camD.x, camD.y, camD.z };
-		float pow = 50;
-		camshooter->updatePos(pos);
-		camshooter->updateDir(dir * pow);
-	}
+	//if (camshooter != nullptr) {
+	//	PxVec3 camE = GetCamera()->getEye();
+	//	PxVec3 camD = GetCamera()->getDir();
+	//	Vector3D pos = { camE.x, camE.y, camE.z };
+	//	Vector3D dir = { camD.x, camD.y, camD.z };
+	//	float pow = 50;
+	//	camshooter->updatePos(pos);
+	//	camshooter->updateDir(dir * pow);
+	//}
 
 	plr->update(t);
 	if (plr->getPos().yV <= deathY) {
@@ -310,6 +208,9 @@ void mainGame::createEnemy() {
 	for (auto fg : forceGens) {
 		if (fg->getType() != FG_PLRSPEED) enemy->addGenToShots(fg);
 	}
+
+	tSinceLastShot = 0;
+	currShotDelay = maxShotDelayMS / 1000;
 
 	// Partícula que cuelga: muelle para el enunciado
 

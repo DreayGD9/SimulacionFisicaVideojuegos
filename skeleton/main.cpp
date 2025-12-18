@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-std::string display_text = "Don't get knocked off the tightrope!";
+std::string display_text = "Don't get knocked off the rope! Press J and L to move";
 
 
 using namespace physx;
@@ -123,16 +123,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		game->plrStop();
 		break;
 	}
-	case 'E':
-	{
-		game->enemiesFire();
-		break;
-	}
-	case 'Q':
-	{
-		game->cameraFire();
-		break;
-	}
+	//case 'E':
+	//{
+	//	game->enemiesFire();
+	//	break;
+	//}
+	//case 'Q':
+	//{
+	//	game->cameraFire();
+	//	break;
+	//}
 	default:
 		break;
 	}

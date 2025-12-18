@@ -67,8 +67,11 @@ private:
 	float currShotDelay;
 	float tSinceLastShot;
 
+	float timeuntilShootingMS = 5000;
+	bool startedShooting = false;
+
 	float tornadoDist = 30;
-	float tornadoSpawnTimeMS = 10000;
+	float tornadoSpawnTimeMS = 15000;
 	float tornadoDespawnTimeMS = 5000;
 	float tornadoTimer;
 	bool hasTornadoSpawned = false;
